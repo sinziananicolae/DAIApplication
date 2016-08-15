@@ -95,7 +95,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QTypeId" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="255" />
           <Property Name="Text" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="QCategoryId" Type="int" Nullable="false" />
           <Property Name="QSubcategoryId" Type="int" />
@@ -122,7 +122,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="255" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="CategoryId" Type="int" />
           <Property Name="SubcategoryId" Type="int" />
@@ -131,12 +131,12 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="255" />
           <Property Name="LastName" Type="varchar" MaxLength="255" />
           <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="PhoneNo" Type="varchar" MaxLength="1" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="255" />
           <Property Name="Country" Type="varchar" MaxLength="255" />
           <Property Name="Sex" Type="varchar" MaxLength="255" />
         </EntityType>
@@ -145,7 +145,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="TestId" Type="int" Nullable="false" />
           <Property Name="Score" Type="int" Nullable="false" />
           <Property Name="Time" Type="varchar" MaxLength="1" Nullable="false" />
@@ -219,10 +219,8 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Question__UserId__4F7CD00D">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__Question__UserId__6C190EBB">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Question" Type="Self.Question" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
@@ -295,10 +293,8 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Test__UserId__59063A47">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__Test__UserId__6D0D32F4">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
           <End Role="Test" Type="Self.Test" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
@@ -321,7 +317,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserTest__UserId__619B8048">
+        <Association Name="FK__UserTest__UserId__6B24EA82">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="UserTest" Type="Self.UserTest" Multiplicity="*" />
           <ReferentialConstraint>
@@ -431,7 +427,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <End Role="QType" EntitySet="QType" />
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
-          <AssociationSet Name="FK__Question__UserId__4F7CD00D" Association="Self.FK__Question__UserId__4F7CD00D">
+          <AssociationSet Name="FK__Question__UserId__6C190EBB" Association="Self.FK__Question__UserId__6C190EBB">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
@@ -455,7 +451,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <End Role="Subcategory" EntitySet="Subcategory" />
             <End Role="Test" EntitySet="Test" />
           </AssociationSet>
-          <AssociationSet Name="FK__Test__UserId__59063A47" Association="Self.FK__Test__UserId__59063A47">
+          <AssociationSet Name="FK__Test__UserId__6D0D32F4" Association="Self.FK__Test__UserId__6D0D32F4">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Test" EntitySet="Test" />
           </AssociationSet>
@@ -463,7 +459,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <End Role="Test" EntitySet="Test" />
             <End Role="UserTest" EntitySet="UserTest" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserTest__UserId__619B8048" Association="Self.FK__UserTest__UserId__619B8048">
+          <AssociationSet Name="FK__UserTest__UserId__6B24EA82" Association="Self.FK__UserTest__UserId__6B24EA82">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="UserTest" EntitySet="UserTest" />
           </AssociationSet>
@@ -536,7 +532,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <End Role="Subcategory" EntitySet="Subcategories" />
             <End Role="Question" EntitySet="Questions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Question__UserId__4F7CD00D" Association="Model.FK__Question__UserId__4F7CD00D">
+          <AssociationSet Name="FK__Question__UserId__6C190EBB" Association="Model.FK__Question__UserId__6C190EBB">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Question" EntitySet="Questions" />
           </AssociationSet>
@@ -552,7 +548,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <End Role="Subcategory" EntitySet="Subcategories" />
             <End Role="Test" EntitySet="Tests" />
           </AssociationSet>
-          <AssociationSet Name="FK__Test__UserId__59063A47" Association="Model.FK__Test__UserId__59063A47">
+          <AssociationSet Name="FK__Test__UserId__6D0D32F4" Association="Model.FK__Test__UserId__6D0D32F4">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Test" EntitySet="Tests" />
           </AssociationSet>
@@ -560,7 +556,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <End Role="Test" EntitySet="Tests" />
             <End Role="UserTest" EntitySet="UserTests" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserTest__UserId__619B8048" Association="Model.FK__UserTest__UserId__619B8048">
+          <AssociationSet Name="FK__UserTest__UserId__6B24EA82" Association="Model.FK__UserTest__UserId__6B24EA82">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="UserTest" EntitySet="UserTests" />
           </AssociationSet>
@@ -662,7 +658,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QTypeId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Text" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="QCategoryId" Type="Int32" Nullable="false" />
           <Property Name="QSubcategoryId" Type="Int32" />
@@ -671,7 +667,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <NavigationProperty Name="QAnswers" Relationship="Model.FK__QAnswer__Questio__5535A963" FromRole="Question" ToRole="QAnswer" />
           <NavigationProperty Name="QType" Relationship="Model.FK__Question__QTypeI__5070F446" FromRole="Question" ToRole="QType" />
           <NavigationProperty Name="Subcategory" Relationship="Model.FK__Question__QSubca__52593CB8" FromRole="Question" ToRole="Subcategory" />
-          <NavigationProperty Name="UserProfile" Relationship="Model.FK__Question__UserId__4F7CD00D" FromRole="Question" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="Model.FK__Question__UserId__6C190EBB" FromRole="Question" ToRole="UserProfile" />
           <NavigationProperty Name="QuestionInTests" Relationship="Model.FK__QuestionI__Quest__5EBF139D" FromRole="Question" ToRole="QuestionInTest" />
         </EntityType>
         <EntityType Name="QuestionInTest">
@@ -700,44 +696,44 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="CategoryId" Type="Int32" />
           <Property Name="SubcategoryId" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Model.FK__Test__CategoryId__59FA5E80" FromRole="Test" ToRole="Category" />
           <NavigationProperty Name="QuestionInTests" Relationship="Model.FK__QuestionI__TestI__5DCAEF64" FromRole="Test" ToRole="QuestionInTest" />
           <NavigationProperty Name="Subcategory" Relationship="Model.FK__Test__Subcategor__5AEE82B9" FromRole="Test" ToRole="Subcategory" />
-          <NavigationProperty Name="UserProfile" Relationship="Model.FK__Test__UserId__59063A47" FromRole="Test" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="Model.FK__Test__UserId__6D0D32F4" FromRole="Test" ToRole="UserProfile" />
           <NavigationProperty Name="UserTests" Relationship="Model.FK__UserTest__TestId__628FA481" FromRole="Test" ToRole="UserTest" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Username" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Sex" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Questions" Relationship="Model.FK__Question__UserId__4F7CD00D" FromRole="UserProfile" ToRole="Question" />
-          <NavigationProperty Name="Tests" Relationship="Model.FK__Test__UserId__59063A47" FromRole="UserProfile" ToRole="Test" />
-          <NavigationProperty Name="UserTests" Relationship="Model.FK__UserTest__UserId__619B8048" FromRole="UserProfile" ToRole="UserTest" />
+          <NavigationProperty Name="Questions" Relationship="Model.FK__Question__UserId__6C190EBB" FromRole="UserProfile" ToRole="Question" />
+          <NavigationProperty Name="Tests" Relationship="Model.FK__Test__UserId__6D0D32F4" FromRole="UserProfile" ToRole="Test" />
+          <NavigationProperty Name="UserTests" Relationship="Model.FK__UserTest__UserId__6B24EA82" FromRole="UserProfile" ToRole="UserTest" />
         </EntityType>
         <EntityType Name="UserTest">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="TestId" Type="Int32" Nullable="false" />
           <Property Name="Score" Type="Int32" Nullable="false" />
           <Property Name="Time" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="MaxScore" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Test" Relationship="Model.FK__UserTest__TestId__628FA481" FromRole="UserTest" ToRole="Test" />
-          <NavigationProperty Name="UserProfile" Relationship="Model.FK__UserTest__UserId__619B8048" FromRole="UserTest" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="Model.FK__UserTest__UserId__6B24EA82" FromRole="UserTest" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="database_firewall_rules">
           <Key>
@@ -857,10 +853,8 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Question__UserId__4F7CD00D">
-          <End Type="Model.UserProfile" Role="UserProfile" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__Question__UserId__6C190EBB">
+          <End Type="Model.UserProfile" Role="UserProfile" Multiplicity="0..1" />
           <End Type="Model.Question" Role="Question" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
@@ -909,10 +903,8 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Test__UserId__59063A47">
-          <End Type="Model.UserProfile" Role="UserProfile" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__Test__UserId__6D0D32F4">
+          <End Type="Model.UserProfile" Role="UserProfile" Multiplicity="0..1" />
           <End Type="Model.Test" Role="Test" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
@@ -935,7 +927,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserTest__UserId__619B8048">
+        <Association Name="FK__UserTest__UserId__6B24EA82">
           <End Type="Model.UserProfile" Role="UserProfile" Multiplicity="1" />
           <End Type="Model.UserTest" Role="UserTest" Multiplicity="*" />
           <ReferentialConstraint>

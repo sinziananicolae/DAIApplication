@@ -558,6 +558,8 @@
                     }
                     return size;
                 };
+
+                page_content_onresize();
                 /* EOF NEW OBJECT(GET SIZE OF ARRAY) */
             }
         };

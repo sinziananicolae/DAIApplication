@@ -448,6 +448,16 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAIApplication.Data\DAIApplication.Data.csproj">
+      <Project>{feabced6-428e-452a-bc86-4fdfb356e7cd}</Project>
+      <Name>DAIApplication.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAIApplication.Services\DAIApplication.Services.csproj">
+      <Project>{0286cc19-5960-4cbb-93f6-6c835147711f}</Project>
+      <Name>DAIApplication.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
