@@ -95,9 +95,9 @@ namespace DAIApplication
                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/app-user").Include(
-                   "~/Scripts/Application/Admin/app.js",
-                    "~/Scripts/Application/Admin/services.js",
-                    "~/Scripts/Application/Admin/Modules/Dashboard/DashboardController.js"
+                    "~/Scripts/Application/User/app.js",
+                    "~/Scripts/Application/User/services.js",
+                    "~/Scripts/Application/User/Modules/Dashboard/DashboardController.js"
                      ));
             #endregion
         }

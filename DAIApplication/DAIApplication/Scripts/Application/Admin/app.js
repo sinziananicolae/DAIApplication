@@ -1,7 +1,7 @@
 (function(){
     "use strict";
 
-    angular.module("app", [
+    angular.module("app-admin", [
         "ngRoute",
         "ngSanitize",
         "ngResource",
@@ -13,7 +13,7 @@
         function($routeProvider) {
             $routeProvider.
             when("/dashboard", {
-                templateUrl: "js/app/Modules/Dashboard/Views/dashboard.html",
+                templateUrl: "Scripts/Application/Admin/Modules/Dashboard/Views/dashboard.html",
                 controller: "DashboardCtrl"
             }).
             otherwise({
