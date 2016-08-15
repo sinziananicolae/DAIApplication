@@ -17,7 +17,7 @@ namespace DAIApplication.Data.Database
         public int Id { get; set; }
         public int QuestionId { get; set; }
         public string Answer { get; set; }
-        public byte[] Correct { get; set; }
+        public bool Correct { get; set; }
     
         public virtual Question Question { get; set; }
     }

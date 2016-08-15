@@ -60,6 +60,30 @@ namespace DAIApplication.Services.Question
             return allQuestionsList;
         }
 
+        public List<object> GetQuestionsByTestId(int testId)
+        {
+            List<object> allQuestionsList = new List<object>();
+
+            IEnumerable<QuestionInTest> allQuestions = _dbEntities.QuestionInTests.ToList().Where(f => f.TestId == testId);
+            foreach (QuestionInTest questionInTest in allQuestions)
+            {
+                var question = _dbEntities.Questions.FirstOrDefault(f => f.Id == questionInTest.QuestionId);
+                if (question != null)
+                    allQuestionsList.Add(new
+                    {
+                        question.Id,
+                        question.QTypeId,
+                        question.Text,
+                        question.QCategoryId,
+                        question.QSubcategoryId,
+                        question.Time,
+                        Answers = _answerService.GetAllAnswersForQuestion(question.Id)
+                    });
+            }
+
+            return allQuestionsList;
+        }
+
         public object AddQuestion(Data.Database.Question question, IList<QAnswer> answers)
         {
             if (question.QTypeId == 0 || question.QCategoryId == 0 ||

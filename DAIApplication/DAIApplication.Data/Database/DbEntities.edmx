@@ -80,7 +80,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QuestionId" Type="int" Nullable="false" />
           <Property Name="Answer" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Correct" Type="binary" MaxLength="1" Nullable="false" />
+          <Property Name="Correct" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="QType">
           <Key>
@@ -149,6 +149,7 @@
           <Property Name="TestId" Type="int" Nullable="false" />
           <Property Name="Score" Type="int" Nullable="false" />
           <Property Name="Time" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="MaxScore" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -644,7 +645,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QuestionId" Type="Int32" Nullable="false" />
           <Property Name="Answer" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Correct" Type="Binary" Nullable="false" MaxLength="1" FixedLength="true" />
+          <Property Name="Correct" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Question" Relationship="Model.FK__QAnswer__Questio__5535A963" FromRole="QAnswer" ToRole="Question" />
         </EntityType>
         <EntityType Name="QType">
@@ -734,6 +735,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <Property Name="TestId" Type="Int32" Nullable="false" />
           <Property Name="Score" Type="Int32" Nullable="false" />
           <Property Name="Time" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="MaxScore" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Test" Relationship="Model.FK__UserTest__TestId__628FA481" FromRole="UserTest" ToRole="Test" />
           <NavigationProperty Name="UserProfile" Relationship="Model.FK__UserTest__UserId__619B8048" FromRole="UserTest" ToRole="UserProfile" />
         </EntityType>
@@ -1095,6 +1097,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <EntitySetMapping Name="UserTests">
             <EntityTypeMapping TypeName="Model.UserTest">
               <MappingFragment StoreEntitySet="UserTest">
+                <ScalarProperty Name="MaxScore" ColumnName="MaxScore" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
                 <ScalarProperty Name="TestId" ColumnName="TestId" />
