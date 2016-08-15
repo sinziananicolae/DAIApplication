@@ -30,6 +30,15 @@ namespace DAIApplication.Data.Database
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<QAnswer> QAnswers { get; set; }
+        public virtual DbSet<QType> QTypes { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<QuestionInTest> QuestionInTests { get; set; }
+        public virtual DbSet<Subcategory> Subcategories { get; set; }
+        public virtual DbSet<Test> Tests { get; set; }
+        public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        public virtual DbSet<UserTest> UserTests { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
     }
 }
