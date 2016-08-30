@@ -206,6 +206,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ControllersAPI\QuestionController.cs" />
     <Compile Include="ControllersAPI\UserController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -363,6 +364,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\Application\Admin\Test\TestController.js" />
+    <Content Include="Scripts\Application\Admin\Test\Views\test.html" />
     <Content Include="Scripts\Application\app.js" />
     <Content Include="Scripts\Application\Admin\Dashboard\DashboardController.js" />
     <Content Include="Scripts\Application\Admin\Dashboard\Views\dashboard.html" />

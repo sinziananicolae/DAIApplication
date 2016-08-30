@@ -1,2 +1,511 @@
-﻿!function (e) { e(["jquery"], function (e) { return function () { function t(e, t, n) { return f({ type: O.error, iconClass: g().iconClasses.error, message: e, optionsOverride: n, title: t }) } function n(t, n) { return t || (t = g()), v = e("#" + t.containerId), v.length ? v : (n && (v = c(t)), v) } function i(e, t, n) { return f({ type: O.info, iconClass: g().iconClasses.info, message: e, optionsOverride: n, title: t }) } function o(e) { w = e } function s(e, t, n) { return f({ type: O.success, iconClass: g().iconClasses.success, message: e, optionsOverride: n, title: t }) } function a(e, t, n) { return f({ type: O.warning, iconClass: g().iconClasses.warning, message: e, optionsOverride: n, title: t }) } function r(e) { var t = g(); v || n(t), l(e, t) || u(t) } function d(t) { var i = g(); return v || n(i), t && 0 === e(":focus", t).length ? void h(t) : void (v.children().length && v.remove()) } function u(t) { for (var n = v.children(), i = n.length - 1; i >= 0; i--) l(e(n[i]), t) } function l(t, n) { return t && 0 === e(":focus", t).length ? (t[n.hideMethod]({ duration: n.hideDuration, easing: n.hideEasing, complete: function () { h(t) } }), !0) : !1 } function c(t) { return v = e("<div/>").attr("id", t.containerId).addClass(t.positionClass).attr("aria-live", "polite").attr("role", "alert"), v.appendTo(e(t.target)), v } function p() { return { tapToDismiss: !0, toastClass: "toast", containerId: "toast-container", debug: !1, showMethod: "fadeIn", showDuration: 300, showEasing: "swing", onShown: void 0, hideMethod: "fadeOut", hideDuration: 1e3, hideEasing: "swing", onHidden: void 0, extendedTimeOut: 1e3, iconClasses: { error: "toast-error", info: "toast-info", success: "toast-success", warning: "toast-warning" }, iconClass: "toast-info", positionClass: "toast-top-right", timeOut: 5e3, titleClass: "toast-title", messageClass: "toast-message", target: "body", closeHtml: '<button type="button">&times;</button>', newestOnTop: !0, preventDuplicates: !1, progressBar: !1 } } function m(e) { w && w(e) } function f(t) { function i(t) { return !e(":focus", l).length || t ? (clearTimeout(O.intervalId), l[r.hideMethod]({ duration: r.hideDuration, easing: r.hideEasing, complete: function () { h(l), r.onHidden && "hidden" !== b.state && r.onHidden(), b.state = "hidden", b.endTime = new Date, m(b) } })) : void 0 } function o() { (r.timeOut > 0 || r.extendedTimeOut > 0) && (u = setTimeout(i, r.extendedTimeOut), O.maxHideTime = parseFloat(r.extendedTimeOut), O.hideEta = (new Date).getTime() + O.maxHideTime) } function s() { clearTimeout(u), O.hideEta = 0, l.stop(!0, !0)[r.showMethod]({ duration: r.showDuration, easing: r.showEasing }) } function a() { var e = (O.hideEta - (new Date).getTime()) / O.maxHideTime * 100; f.width(e + "%") } var r = g(), d = t.iconClass || r.iconClass; if ("undefined" != typeof t.optionsOverride && (r = e.extend(r, t.optionsOverride), d = t.optionsOverride.iconClass || d), r.preventDuplicates) { if (t.message === C) return; C = t.message } T++, v = n(r, !0); var u = null, l = e("<div/>"), c = e("<div/>"), p = e("<div/>"), f = e("<div/>"), w = e(r.closeHtml), O = { intervalId: null, hideEta: null, maxHideTime: null }, b = { toastId: T, state: "visible", startTime: new Date, options: r, map: t }; return t.iconClass && l.addClass(r.toastClass).addClass(d), t.title && (c.append(t.title).addClass(r.titleClass), l.append(c)), t.message && (p.append(t.message).addClass(r.messageClass), l.append(p)), r.closeButton && (w.addClass("toast-close-button").attr("role", "button"), l.prepend(w)), r.progressBar && (f.addClass("toast-progress"), l.prepend(f)), l.hide(), r.newestOnTop ? v.prepend(l) : v.append(l), l[r.showMethod]({ duration: r.showDuration, easing: r.showEasing, complete: r.onShown }), r.timeOut > 0 && (u = setTimeout(i, r.timeOut), O.maxHideTime = parseFloat(r.timeOut), O.hideEta = (new Date).getTime() + O.maxHideTime, r.progressBar && (O.intervalId = setInterval(a, 10))), l.hover(s, o), !r.onclick && r.tapToDismiss && l.click(i), r.closeButton && w && w.click(function (e) { e.stopPropagation ? e.stopPropagation() : void 0 !== e.cancelBubble && e.cancelBubble !== !0 && (e.cancelBubble = !0), i(!0) }), r.onclick && l.click(function () { r.onclick(), i() }), m(b), r.debug && console && console.log(b), l } function g() { return e.extend({}, p(), b.options) } function h(e) { v || (v = n()), e.is(":visible") || (e.remove(), e = null, 0 === v.children().length && (v.remove(), C = void 0)) } var v, w, C, T = 0, O = { error: "error", info: "info", success: "success", warning: "warning" }, b = { clear: r, remove: d, error: t, getContainer: n, info: i, options: {}, subscribe: o, success: s, version: "2.1.0", warning: a }; return b }() }) }("function" == typeof define && define.amd ? define : function (e, t) { "undefined" != typeof module && module.exports ? module.exports = t(require("jquery")) : window.toastr = t(window.jQuery) });
-//# sourceMappingURL=toastr.js.map
+﻿(function () {
+    'use strict';
+
+    angular.module('toastr', [])
+      .factory('toastr', toastr);
+
+    toastr.$inject = ['$animate', '$injector', '$document', '$rootScope', '$sce', 'toastrConfig', '$q'];
+
+    function toastr($animate, $injector, $document, $rootScope, $sce, toastrConfig, $q) {
+        var container;
+        var index = 0;
+        var toasts = [];
+
+        var previousToastMessage = '';
+        var openToasts = {};
+
+        var containerDefer = $q.defer();
+
+        var toast = {
+            active: active,
+            clear: clear,
+            error: error,
+            info: info,
+            remove: remove,
+            success: success,
+            warning: warning,
+            refreshTimer: refreshTimer
+        };
+
+        return toast;
+
+        /* Public API */
+        function active() {
+            return toasts.length;
+        }
+
+        function clear(toast) {
+            // Bit of a hack, I will remove this soon with a BC
+            if (arguments.length === 1 && !toast) { return; }
+
+            if (toast) {
+                remove(toast.toastId);
+            } else {
+                for (var i = 0; i < toasts.length; i++) {
+                    remove(toasts[i].toastId);
+                }
+            }
+        }
+
+        function error(message, title, optionsOverride) {
+            var type = _getOptions().iconClasses.error;
+            return _buildNotification(type, message, title, optionsOverride);
+        }
+
+        function info(message, title, optionsOverride) {
+            var type = _getOptions().iconClasses.info;
+            return _buildNotification(type, message, title, optionsOverride);
+        }
+
+        function success(message, title, optionsOverride) {
+            var type = _getOptions().iconClasses.success;
+            return _buildNotification(type, message, title, optionsOverride);
+        }
+
+        function warning(message, title, optionsOverride) {
+            var type = _getOptions().iconClasses.warning;
+            return _buildNotification(type, message, title, optionsOverride);
+        }
+
+        function refreshTimer(toast, newTime) {
+            if (toast && toast.isOpened && toasts.indexOf(toast) >= 0) {
+                toast.scope.refreshTimer(newTime);
+            }
+        }
+
+        function remove(toastId, wasClicked) {
+            var toast = findToast(toastId);
+
+            if (toast && !toast.deleting) { // Avoid clicking when fading out
+                toast.deleting = true;
+                toast.isOpened = false;
+                $animate.leave(toast.el).then(function () {
+                    if (toast.scope.options.onHidden) {
+                        toast.scope.options.onHidden(!!wasClicked, toast);
+                    }
+                    toast.scope.$destroy();
+                    var index = toasts.indexOf(toast);
+                    delete openToasts[toast.scope.message];
+                    toasts.splice(index, 1);
+                    var maxOpened = toastrConfig.maxOpened;
+                    if (maxOpened && toasts.length >= maxOpened) {
+                        toasts[maxOpened - 1].open.resolve();
+                    }
+                    if (lastToast()) {
+                        container.remove();
+                        container = null;
+                        containerDefer = $q.defer();
+                    }
+                });
+            }
+
+            function findToast(toastId) {
+                for (var i = 0; i < toasts.length; i++) {
+                    if (toasts[i].toastId === toastId) {
+                        return toasts[i];
+                    }
+                }
+            }
+
+            function lastToast() {
+                return !toasts.length;
+            }
+        }
+
+        /* Internal functions */
+        function _buildNotification(type, message, title, optionsOverride) {
+            if (angular.isObject(title)) {
+                optionsOverride = title;
+                title = null;
+            }
+
+            return _notify({
+                iconClass: type,
+                message: message,
+                optionsOverride: optionsOverride,
+                title: title
+            });
+        }
+
+        function _getOptions() {
+            return angular.extend({}, toastrConfig);
+        }
+
+        function _createOrGetContainer(options) {
+            if (container) { return containerDefer.promise; }
+
+            container = angular.element('<div></div>');
+            container.attr('id', options.containerId);
+            container.addClass(options.positionClass);
+            container.css({ 'pointer-events': 'auto' });
+
+            var target = angular.element(document.querySelector(options.target));
+
+            if (!target || !target.length) {
+                throw 'Target for toasts doesn\'t exist';
+            }
+
+            $animate.enter(container, target).then(function () {
+                containerDefer.resolve();
+            });
+
+            return containerDefer.promise;
+        }
+
+        function _notify(map) {
+            var options = _getOptions();
+
+            if (shouldExit()) { return; }
+
+            var newToast = createToast();
+
+            toasts.push(newToast);
+
+            if (ifMaxOpenedAndAutoDismiss()) {
+                var oldToasts = toasts.slice(0, (toasts.length - options.maxOpened));
+                for (var i = 0, len = oldToasts.length; i < len; i++) {
+                    remove(oldToasts[i].toastId);
+                }
+            }
+
+            if (maxOpenedNotReached()) {
+                newToast.open.resolve();
+            }
+
+            newToast.open.promise.then(function () {
+                _createOrGetContainer(options).then(function () {
+                    newToast.isOpened = true;
+                    if (options.newestOnTop) {
+                        $animate.enter(newToast.el, container).then(function () {
+                            newToast.scope.init();
+                        });
+                    } else {
+                        var sibling = container[0].lastChild ? angular.element(container[0].lastChild) : null;
+                        $animate.enter(newToast.el, container, sibling).then(function () {
+                            newToast.scope.init();
+                        });
+                    }
+                });
+            });
+
+            return newToast;
+
+            function ifMaxOpenedAndAutoDismiss() {
+                return options.autoDismiss && options.maxOpened && toasts.length > options.maxOpened;
+            }
+
+            function createScope(toast, map, options) {
+                if (options.allowHtml) {
+                    toast.scope.allowHtml = true;
+                    toast.scope.title = $sce.trustAsHtml(map.title);
+                    toast.scope.message = $sce.trustAsHtml(map.message);
+                } else {
+                    toast.scope.title = map.title;
+                    toast.scope.message = map.message;
+                }
+
+                toast.scope.toastType = toast.iconClass;
+                toast.scope.toastId = toast.toastId;
+                toast.scope.extraData = options.extraData;
+
+                toast.scope.options = {
+                    extendedTimeOut: options.extendedTimeOut,
+                    messageClass: options.messageClass,
+                    onHidden: options.onHidden,
+                    onShown: generateEvent('onShown'),
+                    onTap: generateEvent('onTap'),
+                    progressBar: options.progressBar,
+                    tapToDismiss: options.tapToDismiss,
+                    timeOut: options.timeOut,
+                    titleClass: options.titleClass,
+                    toastClass: options.toastClass
+                };
+
+                if (options.closeButton) {
+                    toast.scope.options.closeHtml = options.closeHtml;
+                }
+
+                function generateEvent(event) {
+                    if (options[event]) {
+                        return function () {
+                            options[event](toast);
+                        };
+                    }
+                }
+            }
+
+            function createToast() {
+                var newToast = {
+                    toastId: index++,
+                    isOpened: false,
+                    scope: $rootScope.$new(),
+                    open: $q.defer()
+                };
+                newToast.iconClass = map.iconClass;
+                if (map.optionsOverride) {
+                    angular.extend(options, cleanOptionsOverride(map.optionsOverride));
+                    newToast.iconClass = map.optionsOverride.iconClass || newToast.iconClass;
+                }
+
+                createScope(newToast, map, options);
+
+                newToast.el = createToastEl(newToast.scope);
+
+                return newToast;
+
+                function cleanOptionsOverride(options) {
+                    var badOptions = ['containerId', 'iconClasses', 'maxOpened', 'newestOnTop',
+                                      'positionClass', 'preventDuplicates', 'preventOpenDuplicates', 'templates'];
+                    for (var i = 0, l = badOptions.length; i < l; i++) {
+                        delete options[badOptions[i]];
+                    }
+
+                    return options;
+                }
+            }
+
+            function createToastEl(scope) {
+                var angularDomEl = angular.element('<div toast></div>'),
+                  $compile = $injector.get('$compile');
+                return $compile(angularDomEl)(scope);
+            }
+
+            function maxOpenedNotReached() {
+                return options.maxOpened && toasts.length <= options.maxOpened || !options.maxOpened;
+            }
+
+            function shouldExit() {
+                var isDuplicateOfLast = options.preventDuplicates && map.message === previousToastMessage;
+                var isDuplicateOpen = options.preventOpenDuplicates && openToasts[map.message];
+
+                if (isDuplicateOfLast || isDuplicateOpen) {
+                    return true;
+                }
+
+                previousToastMessage = map.message;
+                openToasts[map.message] = true;
+
+                return false;
+            }
+        }
+    }
+}());
+
+(function () {
+    'use strict';
+
+    angular.module('toastr')
+      .constant('toastrConfig', {
+          allowHtml: false,
+          autoDismiss: false,
+          closeButton: false,
+          closeHtml: '<button>&times;</button>',
+          containerId: 'toast-container',
+          extendedTimeOut: 1000,
+          iconClasses: {
+              error: 'toast-error',
+              info: 'toast-info',
+              success: 'toast-success',
+              warning: 'toast-warning'
+          },
+          maxOpened: 0,
+          messageClass: 'toast-message',
+          newestOnTop: true,
+          onHidden: null,
+          onShown: null,
+          onTap: null,
+          positionClass: 'toast-top-right',
+          preventDuplicates: false,
+          preventOpenDuplicates: false,
+          progressBar: false,
+          tapToDismiss: true,
+          target: 'body',
+          templates: {
+              toast: 'directives/toast/toast.html',
+              progressbar: 'directives/progressbar/progressbar.html'
+          },
+          timeOut: 5000,
+          titleClass: 'toast-title',
+          toastClass: 'toast'
+      });
+}());
+
+(function () {
+    'use strict';
+
+    angular.module('toastr')
+      .directive('progressBar', progressBar);
+
+    progressBar.$inject = ['toastrConfig'];
+
+    function progressBar(toastrConfig) {
+        return {
+            require: '^toast',
+            templateUrl: function () {
+                return toastrConfig.templates.progressbar;
+            },
+            link: linkFunction
+        };
+
+        function linkFunction(scope, element, attrs, toastCtrl) {
+            var intervalId, currentTimeOut, hideTime;
+
+            toastCtrl.progressBar = scope;
+
+            scope.start = function (duration) {
+                if (intervalId) {
+                    clearInterval(intervalId);
+                }
+
+                currentTimeOut = parseFloat(duration);
+                hideTime = new Date().getTime() + currentTimeOut;
+                intervalId = setInterval(updateProgress, 10);
+            };
+
+            scope.stop = function () {
+                if (intervalId) {
+                    clearInterval(intervalId);
+                }
+            };
+
+            function updateProgress() {
+                var percentage = ((hideTime - (new Date().getTime())) / currentTimeOut) * 100;
+                element.css('width', percentage + '%');
+            }
+
+            scope.$on('$destroy', function () {
+                // Failsafe stop
+                clearInterval(intervalId);
+            });
+        }
+    }
+}());
+
+(function () {
+    'use strict';
+
+    angular.module('toastr')
+      .controller('ToastController', ToastController);
+
+    function ToastController() {
+        this.progressBar = null;
+
+        this.startProgressBar = function (duration) {
+            if (this.progressBar) {
+                this.progressBar.start(duration);
+            }
+        };
+
+        this.stopProgressBar = function () {
+            if (this.progressBar) {
+                this.progressBar.stop();
+            }
+        };
+    }
+}());
+
+(function () {
+    'use strict';
+
+    angular.module('toastr')
+      .directive('toast', toast);
+
+    toast.$inject = ['$injector', '$interval', 'toastrConfig', 'toastr'];
+
+    function toast($injector, $interval, toastrConfig, toastr) {
+        return {
+            templateUrl: function () {
+                return toastrConfig.templates.toast;
+            },
+            controller: 'ToastController',
+            link: toastLinkFunction
+        };
+
+        function toastLinkFunction(scope, element, attrs, toastCtrl) {
+            var timeout;
+
+            scope.toastClass = scope.options.toastClass;
+            scope.titleClass = scope.options.titleClass;
+            scope.messageClass = scope.options.messageClass;
+            scope.progressBar = scope.options.progressBar;
+
+            if (wantsCloseButton()) {
+                var button = angular.element(scope.options.closeHtml),
+                  $compile = $injector.get('$compile');
+                button.addClass('toast-close-button');
+                button.attr('ng-click', 'close(true, $event)');
+                $compile(button)(scope);
+                element.children().prepend(button);
+            }
+
+            scope.init = function () {
+                if (scope.options.timeOut) {
+                    timeout = createTimeout(scope.options.timeOut);
+                }
+                if (scope.options.onShown) {
+                    scope.options.onShown();
+                }
+            };
+
+            element.on('mouseenter', function () {
+                hideAndStopProgressBar();
+                if (timeout) {
+                    $interval.cancel(timeout);
+                }
+            });
+
+            scope.tapToast = function () {
+                if (angular.isFunction(scope.options.onTap)) {
+                    scope.options.onTap();
+                }
+                if (scope.options.tapToDismiss) {
+                    scope.close(true);
+                }
+            };
+
+            scope.close = function (wasClicked, $event) {
+                if ($event && angular.isFunction($event.stopPropagation)) {
+                    $event.stopPropagation();
+                }
+                toastr.remove(scope.toastId, wasClicked);
+            };
+
+            scope.refreshTimer = function (newTime) {
+                if (timeout) {
+                    $interval.cancel(timeout);
+                    timeout = createTimeout(newTime || scope.options.timeOut);
+                }
+            };
+
+            element.on('mouseleave', function () {
+                if (scope.options.timeOut === 0 && scope.options.extendedTimeOut === 0) { return; }
+                scope.$apply(function () {
+                    scope.progressBar = scope.options.progressBar;
+                });
+                timeout = createTimeout(scope.options.extendedTimeOut);
+            });
+
+            function createTimeout(time) {
+                toastCtrl.startProgressBar(time);
+                return $interval(function () {
+                    toastCtrl.stopProgressBar();
+                    toastr.remove(scope.toastId);
+                }, time, 1);
+            }
+
+            function hideAndStopProgressBar() {
+                scope.progressBar = false;
+                toastCtrl.stopProgressBar();
+            }
+
+            function wantsCloseButton() {
+                return scope.options.closeHtml;
+            }
+        }
+    }
+}());
+
+angular.module("toastr").run(["$templateCache", function ($templateCache) {
+    $templateCache.put("directives/progressbar/progressbar.html", "<div class=\"toast-progress\"></div>\n");
+    $templateCache.put("directives/toast/toast.html", "<div class=\"{{toastClass}} {{toastType}}\" ng-click=\"tapToast()\">\n  <div ng-switch on=\"allowHtml\">\n    <div ng-switch-default ng-if=\"title\" class=\"{{titleClass}}\" aria-label=\"{{title}}\">{{title}}</div>\n    <div ng-switch-default class=\"{{messageClass}}\" aria-label=\"{{message}}\">{{message}}</div>\n    <div ng-switch-when=\"true\" ng-if=\"title\" class=\"{{titleClass}}\" ng-bind-html=\"title\"></div>\n    <div ng-switch-when=\"true\" class=\"{{messageClass}}\" ng-bind-html=\"message\"></div>\n  </div>\n  <progress-bar ng-if=\"progressBar\"></progress-bar>\n</div>\n");
+}]);

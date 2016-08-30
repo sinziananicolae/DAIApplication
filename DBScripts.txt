@@ -1,0 +1,4 @@
+--- QTypes ---
+
+INSERT INTO QType (Name) VALUES ('Single Answer');
+INSERT INTO QType (Name) VALUES ('Multiple Answers');

@@ -2,7 +2,7 @@
     "use strict";
 
     var serviceMetods = {
-        get: { method: "GET"},
+        get: { method: "GET" },
         create: { method: "POST" },
         update: { method: "PUT" },
         patch: { method: "PATCH" },
@@ -10,11 +10,11 @@
     };
 
     angular.module("services", ["ngResource"])
-        .factory("UserService",
-        [
-            "$resource", "$http", function($resource, $http) {
-                return $resource("/api/user", { }, serviceMetods);
-            }
-        ]);
+        .factory("UserService", ["$resource", function ($resource) {
+            return $resource("/api/user", {}, serviceMetods);
+        }])
+        .factory("QTypesService", ["$resource", function ($resource) {
+            return $resource("/api/qTypes", {}, serviceMetods);
+        }]);
 
 }());

@@ -80,7 +80,7 @@ namespace DAIApplication
 
             #region Application
             bundles.Add(new StyleBundle("~/Content/app-css").Include(
-                     "~/Content/Application/style.css"));
+                     "~/Content/Application/Shared/style.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/app-common").Include(
                      "~/Scripts/Application/Common/Directives/directives.js",
@@ -92,7 +92,8 @@ namespace DAIApplication
                     "~/Scripts/Application/app.js",
                     "~/Scripts/Application/services.js",
                     "~/Scripts/Application/config.js",
-                    "~/Scripts/Application/Admin/Dashboard/DashboardController.js"
+                    "~/Scripts/Application/Admin/Dashboard/DashboardController.js",
+                    "~/Scripts/Application/Admin/Test/TestController.js"
                      ));
             #endregion
         }

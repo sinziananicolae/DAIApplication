@@ -109,5 +109,22 @@ namespace DAIApplication.Services.Question
                 }
             };
         }
+
+        public List<object> GetQuestionTypes()
+        {
+            List<object> allQuestionsTypesList = new List<object>();
+
+            IEnumerable<QType> allQuestionTypes = _dbEntities.QTypes.ToList();
+            foreach (QType qType in allQuestionTypes)
+            {
+                allQuestionsTypesList.Add(new
+                {
+                    qType.Id,
+                    qType.Name
+                });
+            }
+
+            return allQuestionsTypesList;
+        }
     }
 }

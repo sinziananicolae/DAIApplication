@@ -1,0 +1,81 @@
+﻿<div class="row">
+    <div class="col-md-12">
+
+        <form class="form-horizontal">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>New</strong> Test</h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        A test must have at least 5 questions and each question must have at least 3 possible answers. A question can
+                        have one or multiple answers and you should specify it when creating the question. Please check the correct answers before
+                        saving the test.
+                    </p>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group" ng-class="{'has-error': !test.Name }">
+                        <label class="col-md-3 col-xs-12 control-label">Test Title</label>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" ng-model="test.Name" required/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-repeat="question in test.questions">
+                        <label class="col-md-3 col-xs-12 control-label">Question {{$index + 1}}</label>
+                        <div class="col-md-6 col-xs-12" ng-class="{'has-error': !question.Name }">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" ng-model="question.Name" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12" ng-repeat="answer in question.answers track by $index" ng-if="question.qType === 1">
+                            <label class="col-md-3 col-xs-12 control-label">{{answersIndexes[$index]}}.</label>
+                            <div class="col-md-9 col-xs-12">
+                                <label class="check" style="display: inline-flex;">
+                                    <input type="radio" ng-model="$parent.correct" name="correct" value="{{answer.correct}}"/>
+                                    <input type="text" class="form-control" ng-model="answer.answer" required />
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12" ng-repeat="answer in question.answers track by $index" ng-if="question.qType === 2">
+                            <label class="col-md-3 col-xs-12 control-label">{{answersIndexes[$index]}}.</label>
+                            <div class="col-md-9 col-xs-12">
+                                <label class="check" style="display: inline-flex;">
+                                    <input type="checkbox" class="icheckbox" ng-model="answer.correct"/>
+                                    <input type="text" class="form-control" style="margin-left: 25px" ng-model="answer.answer" required/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <button class="btn btn-primary" ng-click="addAnswer(question)">[ + ]</button>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': !selectedQType }">
+                        <label class="col-md-3 col-xs-12 control-label">Question Type</label>
+                        <div class="col-md-3 col-xs-12">
+                            <select class="form-control select"
+                                    ng-options="qType.Name for qType in qTypesList"
+                                    ng-model="selectedQType" required>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <button class="btn btn-primary" ng-disabled="!selectedQType" ng-click="addQuestion()">[ + ]</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-default">Clear Form</button>
+                    <button class="btn btn-primary pull-right">Submit</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>                   

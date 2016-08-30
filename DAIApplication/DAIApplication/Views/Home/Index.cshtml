@@ -9,54 +9,61 @@
 <body ng-app="app" data-custom-theme-functions>
     <!-- START PAGE CONTAINER -->
     <div class="page-container" ng-controller="GreetingController">
-
-        <!-- START PAGE SIDEBAR -->
-        <div class="page-sidebar">
-            <!-- START X-NAVIGATION -->
-            <ul class="x-navigation">
-                <li class="xn-logo">
-                    <a href="#/dashboard">Test Me!</a>
-                    <a class="x-navigation-control"></a>
-                </li>
-                <li class="xn-profile">
-                    <div class="profile">
-                        <div class="profile-data">
-                            <div class="profile-data-name">John Doe</div>
-                            <div class="profile-data-title">Web Developer/Designer</div>
+        <div ng-hide="loading">
+            <!-- START PAGE SIDEBAR -->
+            <div class="page-sidebar">
+                <!-- START X-NAVIGATION -->
+                <ul class="x-navigation">
+                    <li class="xn-logo">
+                        <a href="#/dashboard">Test Me!</a>
+                        <a class="x-navigation-control"></a>
+                    </li>
+                    <li class="xn-profile">
+                        <div class="profile">
+                            <div class="profile-data">
+                                <div class="profile-data-name">{{user.UserName}}</div>
+                                <div class="profile-data-title">
+                                    <span ng-if="user.UserRole == 1">Administrator</span>
+                                    <span ng-if="user.UserRole == 2">User</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="xn-title">Navigation</li>
-                <li class="active">
-                    <a href="#/dashboard"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
-                </li>
-                <li class="xn-openable">
-                    <a href="#/profile"><span class="fa fa-files-o"></span> <span class="xn-text">Profile</span></a>
-                </li>
-            </ul>
-            <!-- END X-NAVIGATION -->
-        </div>
-        <!-- END PAGE SIDEBAR -->
-        <!-- PAGE CONTENT -->
-        <div class="page-content">
+                    </li>
+                    <li class="xn-title">Navigation</li>
+                    <li class="active">
+                        <a href="#/dashboard"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+                    </li>
+                    <li class="xn-openable" ng-if="user.UserRole == 1">
+                        <a href="#/profile"><span class="fa fa-files-o"></span> <span class="xn-text">Profile</span></a>
+                    </li>
+                    <li class="xn-openable" ng-if="user.UserRole == 1">
+                        <a href="#/createTest"><span class="fa fa-files-o"></span> <span class="xn-text">Create Test</span></a>
+                    </li>
+                </ul>
+                <!-- END X-NAVIGATION -->
+            </div>
+            <!-- END PAGE SIDEBAR -->
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
 
-            <!-- START X-NAVIGATION VERTICAL -->
-            <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
-                <!-- TOGGLE NAVIGATION -->
-                <li class="xn-icon-button">
-                    <a class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
-                </li>
-                <!-- END TOGGLE NAVIGATION -->
-                <!-- SIGN OUT -->
-                <li class="xn-icon-button pull-right">
-                    <a href="/Account/LogOff" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>
-                </li>
-                <!-- END SIGN OUT -->
-            </ul>
-            <!-- END X-NAVIGATION VERTICAL -->
-            <div ng-view =""></div>
+                <!-- START X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                    <!-- END TOGGLE NAVIGATION -->
+                    <!-- SIGN OUT -->
+                    <li class="xn-icon-button pull-right">
+                        <a ng-click="logOff()" class="mb-control cursor-pointer" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>
+                    </li>
+                    <!-- END SIGN OUT -->
+                </ul>
+                <!-- END X-NAVIGATION VERTICAL -->
+                <div ng-view=""></div>
+            </div>
+            <!-- END PAGE CONTENT -->
         </div>
-        <!-- END PAGE CONTENT -->
     </div>
     <!-- END PAGE CONTAINER -->
 </body>
