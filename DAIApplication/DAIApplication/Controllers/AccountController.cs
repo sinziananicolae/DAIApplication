@@ -24,9 +24,9 @@ namespace DAIApplication.Controllers
         public AccountController()
         {
             _userService = new UserService();
-    }
+        }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -38,9 +38,9 @@ namespace DAIApplication.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -83,12 +83,7 @@ namespace DAIApplication.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    var userRole = _userService.GetUserRole(model.Email);
-
-                    if (userRole != null && userRole == "1")
-                        return RedirectToAction("Index", "Home");
-                    return RedirectToAction("IndexUser", "Home");
-
+                    return RedirectToAction("Index", "Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -129,7 +124,7 @@ namespace DAIApplication.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -175,7 +170,7 @@ namespace DAIApplication.Controllers
                     };
 
                     _userService.RegisterUser(userProfile);
-                    
+
                     UserManager.AddToRole(user.Id, "User");
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -186,12 +181,7 @@ namespace DAIApplication.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    var userRole = user.Roles.FirstOrDefault(f => f.UserId == user.Id);
-
-                    if (userRole != null && userRole.RoleId == "1")
-                        return RedirectToAction("Index", "Home");
-
-                    return RedirectToAction("IndexUser", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }

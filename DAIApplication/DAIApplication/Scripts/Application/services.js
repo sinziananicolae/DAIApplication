@@ -10,13 +10,10 @@
     };
 
     angular.module("services", ["ngResource"])
-        .factory("HiveFileService",
+        .factory("UserService",
         [
             "$resource", "$http", function($resource, $http) {
-                $http.defaults.useXDomain = true;
-                return $resource("/hivefiles/:hiveId/:type",
-                    { hiveId: "@hiveId", type: "@type" },
-                    serviceMetods);
+                return $resource("/api/user", { }, serviceMetods);
             }
         ]);
 

@@ -88,16 +88,11 @@ namespace DAIApplication
                      "~/Scripts/Theme/custom.js",
                      "~/Scripts/Theme/mcustomscrollbar/jquery.mCustomScrollbar.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/app-admin").Include(
-                    "~/Scripts/Application/Admin/app.js",
-                    "~/Scripts/Application/Admin/services.js",
-                    "~/Scripts/Application/Admin/Modules/Dashboard/DashboardController.js"
-                     ));
-
-            bundles.Add(new ScriptBundle("~/bundles/app-user").Include(
-                    "~/Scripts/Application/User/app.js",
-                    "~/Scripts/Application/User/services.js",
-                    "~/Scripts/Application/User/Modules/Dashboard/DashboardController.js"
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                    "~/Scripts/Application/app.js",
+                    "~/Scripts/Application/services.js",
+                    "~/Scripts/Application/config.js",
+                    "~/Scripts/Application/Admin/Dashboard/DashboardController.js"
                      ));
             #endregion
         }

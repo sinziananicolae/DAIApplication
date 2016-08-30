@@ -44,5 +44,12 @@ namespace DAIApplication.Services.UserService
             var role = user.AspNetRoles.First();
             return role.Id;
         }
+
+        public string GetUsername(string email)
+        {
+            var user = _dbEntities.UserProfiles.FirstOrDefault(f => f.Email == email);
+            var username = user.Username;
+            return username;
+        }
     }
 }

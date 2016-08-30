@@ -3,12 +3,12 @@
 }
 
 @section scripts{
-    @Scripts.Render("~/bundles/app-admin")
+    @Scripts.Render("~/bundles/app")
 }
 
-<body ng-app="app-admin" data-custom-theme-functions>
+<body ng-app="app" data-custom-theme-functions>
     <!-- START PAGE CONTAINER -->
-    <div class="page-container">
+    <div class="page-container" ng-controller="GreetingController">
 
         <!-- START PAGE SIDEBAR -->
         <div class="page-sidebar">
