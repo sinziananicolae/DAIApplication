@@ -28,31 +28,6 @@ namespace DAIApplication.Services.Question
                     question.Id,
                     question.QTypeId,
                     question.Text,
-                    question.QCategoryId,
-                    question.QSubcategoryId,
-                    question.Time,
-                    Answers = _answerService.GetAllAnswersForQuestion(question.Id)
-                });
-            }
-
-            return allQuestionsList;
-        }
-
-        public List<object> GetQuestionsBySubcategory(int subcategoryId)
-        {
-            List<object> allQuestionsList = new List<object>();
-
-            IEnumerable<Data.Database.Question> allQuestions = _dbEntities.Questions.ToList().Where(f => f.QSubcategoryId == subcategoryId);
-            foreach (Data.Database.Question question in allQuestions)
-            {
-                allQuestionsList.Add(new
-                {
-                    question.Id,
-                    question.QTypeId,
-                    question.Text,
-                    question.QCategoryId,
-                    question.QSubcategoryId,
-                    question.Time,
                     Answers = _answerService.GetAllAnswersForQuestion(question.Id)
                 });
             }
@@ -74,9 +49,6 @@ namespace DAIApplication.Services.Question
                         question.Id,
                         question.QTypeId,
                         question.Text,
-                        question.QCategoryId,
-                        question.QSubcategoryId,
-                        question.Time,
                         Answers = _answerService.GetAllAnswersForQuestion(question.Id)
                     });
             }
@@ -86,8 +58,7 @@ namespace DAIApplication.Services.Question
 
         public object AddQuestion(Data.Database.Question question, IList<QAnswer> answers)
         {
-            if (question.QTypeId == 0 || question.QCategoryId == 0 ||
-                question.Text == null || question.Time == null || question.UserId == null)
+            if (question.QTypeId == 0 || question.Text == null || question.UserId == null)
                 return new
                 {
                     success = false,

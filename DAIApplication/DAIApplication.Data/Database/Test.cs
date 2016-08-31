@@ -26,6 +26,7 @@ namespace DAIApplication.Data.Database
         public string Name { get; set; }
         public Nullable<int> CategoryId { get; set; }
         public Nullable<int> SubcategoryId { get; set; }
+        public Nullable<int> Time { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

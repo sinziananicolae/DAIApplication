@@ -41,5 +41,9 @@
                 correct: false
             });
         }
+
+        $scope.removeAnswer = function(question, index) {
+            question.answers.splice(index, 1);
+        }
     }
 }());

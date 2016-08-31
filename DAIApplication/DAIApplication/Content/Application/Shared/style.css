@@ -2,3 +2,13 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.btn-primary {
+    background-image: none;
+}
+
+.pick-answer {
+    width: 40px;
+    height: 17px;
+    margin-top: 7px !important;
+}

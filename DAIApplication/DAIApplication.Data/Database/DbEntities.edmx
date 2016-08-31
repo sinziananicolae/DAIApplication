@@ -97,9 +97,6 @@
           <Property Name="QTypeId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="varchar" MaxLength="255" />
           <Property Name="Text" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="QCategoryId" Type="int" Nullable="false" />
-          <Property Name="QSubcategoryId" Type="int" />
-          <Property Name="Time" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="QuestionInTest">
           <Key>
@@ -122,10 +119,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="varchar" MaxLength="255" />
+          <Property Name="UserId" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="CategoryId" Type="int" />
           <Property Name="SubcategoryId" Type="int" />
+          <Property Name="Time" Type="int" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -180,30 +178,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Principal>
             <Dependent Role="QAnswer">
               <PropertyRef Name="QuestionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Question__QCateg__5165187F">
-          <End Role="Category" Type="Self.Category" Multiplicity="1" />
-          <End Role="Question" Type="Self.Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Question">
-              <PropertyRef Name="QCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Question__QSubca__52593CB8">
-          <End Role="Subcategory" Type="Self.Subcategory" Multiplicity="0..1" />
-          <End Role="Question" Type="Self.Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Subcategory">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Question">
-              <PropertyRef Name="QSubcategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -294,7 +268,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Test__UserId__6D0D32F4">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Test" Type="Self.Test" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
@@ -415,14 +389,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <End Role="Question" EntitySet="Question" />
             <End Role="QAnswer" EntitySet="QAnswer" />
           </AssociationSet>
-          <AssociationSet Name="FK__Question__QCateg__5165187F" Association="Self.FK__Question__QCateg__5165187F">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="Question" EntitySet="Question" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Question__QSubca__52593CB8" Association="Self.FK__Question__QSubca__52593CB8">
-            <End Role="Subcategory" EntitySet="Subcategory" />
-            <End Role="Question" EntitySet="Question" />
-          </AssociationSet>
           <AssociationSet Name="FK__Question__QTypeI__5070F446" Association="Self.FK__Question__QTypeI__5070F446">
             <End Role="QType" EntitySet="QType" />
             <End Role="Question" EntitySet="Question" />
@@ -508,10 +474,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="FK__Question__QCateg__5165187F" Association="Model.FK__Question__QCateg__5165187F">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Question" EntitySet="Questions" />
-          </AssociationSet>
           <AssociationSet Name="FK__Subcateg__QCate__4AB81AF0" Association="Model.FK__Subcateg__QCate__4AB81AF0">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Subcategory" EntitySet="Subcategories" />
@@ -526,10 +488,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </AssociationSet>
           <AssociationSet Name="FK__Question__QTypeI__5070F446" Association="Model.FK__Question__QTypeI__5070F446">
             <End Role="QType" EntitySet="QTypes" />
-            <End Role="Question" EntitySet="Questions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Question__QSubca__52593CB8" Association="Model.FK__Question__QSubca__52593CB8">
-            <End Role="Subcategory" EntitySet="Subcategories" />
             <End Role="Question" EntitySet="Questions" />
           </AssociationSet>
           <AssociationSet Name="FK__Question__UserId__6C190EBB" Association="Model.FK__Question__UserId__6C190EBB">
@@ -630,7 +588,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Questions" Relationship="Model.FK__Question__QCateg__5165187F" FromRole="Category" ToRole="Question" />
           <NavigationProperty Name="Subcategories" Relationship="Model.FK__Subcateg__QCate__4AB81AF0" FromRole="Category" ToRole="Subcategory" />
           <NavigationProperty Name="Tests" Relationship="Model.FK__Test__CategoryId__59FA5E80" FromRole="Category" ToRole="Test" />
         </EntityType>
@@ -660,13 +617,8 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <Property Name="QTypeId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Text" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="QCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="QSubcategoryId" Type="Int32" />
-          <Property Name="Time" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Category" Relationship="Model.FK__Question__QCateg__5165187F" FromRole="Question" ToRole="Category" />
           <NavigationProperty Name="QAnswers" Relationship="Model.FK__QAnswer__Questio__5535A963" FromRole="Question" ToRole="QAnswer" />
           <NavigationProperty Name="QType" Relationship="Model.FK__Question__QTypeI__5070F446" FromRole="Question" ToRole="QType" />
-          <NavigationProperty Name="Subcategory" Relationship="Model.FK__Question__QSubca__52593CB8" FromRole="Question" ToRole="Subcategory" />
           <NavigationProperty Name="UserProfile" Relationship="Model.FK__Question__UserId__6C190EBB" FromRole="Question" ToRole="UserProfile" />
           <NavigationProperty Name="QuestionInTests" Relationship="Model.FK__QuestionI__Quest__5EBF139D" FromRole="Question" ToRole="QuestionInTest" />
         </EntityType>
@@ -688,7 +640,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Category" Relationship="Model.FK__Subcateg__QCate__4AB81AF0" FromRole="Subcategory" ToRole="Category" />
-          <NavigationProperty Name="Questions" Relationship="Model.FK__Question__QSubca__52593CB8" FromRole="Subcategory" ToRole="Question" />
           <NavigationProperty Name="Tests" Relationship="Model.FK__Test__Subcategor__5AEE82B9" FromRole="Subcategory" ToRole="Test" />
         </EntityType>
         <EntityType Name="Test">
@@ -696,10 +647,11 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="CategoryId" Type="Int32" />
           <Property Name="SubcategoryId" Type="Int32" />
+          <Property Name="Time" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Model.FK__Test__CategoryId__59FA5E80" FromRole="Test" ToRole="Category" />
           <NavigationProperty Name="QuestionInTests" Relationship="Model.FK__QuestionI__TestI__5DCAEF64" FromRole="Test" ToRole="QuestionInTest" />
           <NavigationProperty Name="Subcategory" Relationship="Model.FK__Test__Subcategor__5AEE82B9" FromRole="Test" ToRole="Subcategory" />
@@ -779,18 +731,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Question__QCateg__5165187F">
-          <End Type="Model.Category" Role="Category" Multiplicity="1" />
-          <End Type="Model.Question" Role="Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Question">
-              <PropertyRef Name="QCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Subcateg__QCate__4AB81AF0">
           <End Type="Model.Category" Role="Category" Multiplicity="1" />
           <End Type="Model.Subcategory" Role="Subcategory" Multiplicity="*" />
@@ -838,18 +778,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Principal>
             <Dependent Role="Question">
               <PropertyRef Name="QTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Question__QSubca__52593CB8">
-          <End Type="Model.Subcategory" Role="Subcategory" Multiplicity="0..1" />
-          <End Type="Model.Question" Role="Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Subcategory">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Question">
-              <PropertyRef Name="QSubcategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -904,7 +832,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Test__UserId__6D0D32F4">
-          <End Type="Model.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="Model.UserProfile" Role="UserProfile" Multiplicity="1" />
           <End Type="Model.Test" Role="Test" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfile">
@@ -1033,9 +961,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="Model.Question">
               <MappingFragment StoreEntitySet="Question">
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="QSubcategoryId" ColumnName="QSubcategoryId" />
-                <ScalarProperty Name="QCategoryId" ColumnName="QCategoryId" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="QTypeId" ColumnName="QTypeId" />
@@ -1064,6 +989,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <EntitySetMapping Name="Tests">
             <EntityTypeMapping TypeName="Model.Test">
               <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="SubcategoryId" ColumnName="SubcategoryId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

@@ -25,15 +25,10 @@ namespace DAIApplication.Data.Database
         public int QTypeId { get; set; }
         public string UserId { get; set; }
         public string Text { get; set; }
-        public int QCategoryId { get; set; }
-        public Nullable<int> QSubcategoryId { get; set; }
-        public string Time { get; set; }
     
-        public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QAnswer> QAnswers { get; set; }
         public virtual QType QType { get; set; }
-        public virtual Subcategory Subcategory { get; set; }
         public virtual UserProfile UserProfile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QuestionInTest> QuestionInTests { get; set; }
