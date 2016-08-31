@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DAIApplication.Models
 {
-    public class QuestionModel
+    public class AnswerModel
     {
-        public string Text;
-        public int QTypeId;
-        public List<AnswerModel> Answers;
+        public int QuestionId;
+        public string Answer;
+        public bool Correct;
     }
 }

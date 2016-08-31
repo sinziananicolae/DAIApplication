@@ -15,6 +15,9 @@
         }])
         .factory("QTypesService", ["$resource", function ($resource) {
             return $resource("/api/qTypes", {}, serviceMetods);
+        }])
+        .factory("CategoryService", ["$resource", function ($resource) {
+            return $resource("/api/category", {}, serviceMetods);
         }]);
 
 }());

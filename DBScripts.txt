@@ -2,3 +2,26 @@
 
 INSERT INTO QType (Name) VALUES ('Single Answer');
 INSERT INTO QType (Name) VALUES ('Multiple Answers');
+
+--- Category ---
+
+INSERT INTO Category (Name) VALUES ('Programming Language');
+INSERT INTO Category (Name) VALUES ('Language');
+INSERT INTO Category (Name) VALUES ('Logic');
+
+--- Subcategory ---
+
+INSERT INTO Subcategory (CategoryId, Name) VALUES (1, 'Java');
+INSERT INTO Subcategory (CategoryId, Name) VALUES (1, 'C#');
+INSERT INTO Subcategory (CategoryId, Name) VALUES (1, 'Python');
+INSERT INTO Subcategory (CategoryId, Name) VALUES (1, 'Javascript');
+
+INSERT INTO Subcategory (CategoryId, Name) VALUES (2, 'English');
+INSERT INTO Subcategory (CategoryId, Name) VALUES (2, 'French');
+INSERT INTO Subcategory (CategoryId, Name) VALUES (2, 'German');
+INSERT INTO Subcategory (CategoryId, Name) VALUES (2, 'Spanish');
+
+INSERT INTO Subcategory (CategoryId, Name) VALUES (3, 'Number Series');
+INSERT INTO Subcategory (CategoryId, Name) VALUES (3, 'Verbal Classification');
+INSERT INTO Subcategory (CategoryId, Name) VALUES (3, 'Analogies');
+INSERT INTO Subcategory (CategoryId, Name) VALUES (3, 'Logical Problems');
