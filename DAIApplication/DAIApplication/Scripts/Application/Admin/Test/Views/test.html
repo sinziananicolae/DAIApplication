@@ -14,6 +14,23 @@
                     </p>
                 </div>
                 <div class="panel-body">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-3 col-xs-12 control-label">Category</label>
+                        <div class="col-md-6 col-xs-12" ng-class="{'has-error': !test.QCategoryId }">
+                            <select name="testCategory" class="form-control"
+                                    ng-options="category.Id as category.Name for category in categories"
+                                    ng-model="test.QCategoryId" ng-change="setSubcategories(test.QCategoryId)" required></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="col-md-3 col-xs-12 control-label">Subcategory</label>
+                        <div class="col-md-6 col-xs-12" ng-class="{'has-error': !test.QSubcategoryId }">
+                            <select name="testSubCategory" class="form-control" ng-disabled="!test.QCategoryId"
+                                    ng-options="subCategory.Id as subCategory.Name for subCategory in subCategories"
+                                    ng-model="test.QSubcategoryId"></select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-md-3 col-xs-12 control-label">Test Title</label>
                         <div class="col-md-6 col-xs-12" ng-class="{'has-error': !test.Name }">
@@ -33,41 +50,41 @@
                         </div>
                     </div>
 
-                    <div class="form-group" ng-repeat="question in test.questions">
+                    <div class="form-group" ng-repeat="question in test.Questions">
                         <label class="col-md-3 col-xs-12 control-label">Question {{$index + 1}}</label>
-                        <div class="col-md-6 col-xs-12" ng-class="{'has-error': !question.Name }">
+                        <div class="col-md-6 col-xs-12" ng-class="{'has-error': !question.Text }">
                             <div class="input-group">
                                 <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                <input type="text" class="form-control" ng-model="question.Name" required/>
+                                <input type="text" class="form-control" ng-model="question.Text" required/>
                             </div>
                         </div>
-                        <div class="col-md-12 col-xs-12" ng-repeat="answer in question.answers track by $index" ng-if="question.qType === 1">
+                        <div class="col-md-12 col-xs-12" ng-repeat="answer in question.Answers" ng-if="question.QTypeId === 1">
                             <label class="col-md-3 col-xs-12 control-label">{{answersIndexes[$index]}}.</label>
-                            <div class="col-md-9 col-xs-12">
-                                <label class="check" style="display: inline-flex;" ng-class="{'has-error': !answer.answer }">
-                                    <input type="radio" class="pick-answer" ng-model="$parent.correct" name="correct" value="{{answer.correct}}"/>
-                                    <input type="text" class="form-control" ng-model="answer.answer" required/>
+                            <div class="col-md-9 col-xs-12" id="answer.Id">
+                                <label class="check" style="display: inline-flex;" ng-class="{'has-error': !answer.Answer }">
+                                    <input type="radio" class="pick-answer" ng-model="singleAnswers[question.Guid]" name="Correct{{question.Guid}}" value="{{answer.Guid}}"/>
+                                    <input type="text" class="form-control" ng-model="answer.Answer" required/>
                                 </label>
-                                <i class="glyphicon glyphicon-trash" ng-if="question.answers.length > 3"
+                                <i class="glyphicon glyphicon-trash" ng-if="question.Answers.length > 3"
                                    ng-click="removeAnswer(question, $index)">
                                 </i>
-                                <button class="btn btn-primary" ng-if="$last && question.answers.length < answersIndexes.length"
+                                <button class="btn btn-primary" ng-if="$last && question.Answers.length < answersIndexes.length"
                                         ng-click="addAnswer(question)">
                                     [ + ]
                                 </button>
                             </div>
                         </div>
-                        <div class="col-md-12 col-xs-12" ng-repeat="answer in question.answers track by $index" ng-if="question.qType === 2">
+                        <div class="col-md-12 col-xs-12" ng-repeat="answer in question.Answers track by $index" ng-if="question.QTypeId === 2">
                             <label class="col-md-3 col-xs-12 control-label">{{answersIndexes[$index]}}.</label>
                             <div class="col-md-9 col-xs-12">
-                                <label class="check" style="display: inline-flex;" ng-class="{'has-error': !answer.answer }">
-                                    <input type="checkbox" class="pick-answer" ng-model="answer.correct"/>
-                                    <input type="text" class="form-control" ng-model="answer.answer" required/>
+                                <label class="check" style="display: inline-flex;" ng-class="{'has-error': !answer.Answer }">
+                                    <input type="checkbox" class="pick-answer" ng-model="answer.Correct"/>
+                                    <input type="text" class="form-control" ng-model="answer.Answer" required/>
                                 </label>
-                                <i class="glyphicon glyphicon-trash" ng-if="question.answers.length > 3"
+                                <i class="glyphicon glyphicon-trash" ng-if="question.Answers.length > 3"
                                    ng-click="removeAnswer(question, $index)">
                                 </i>
-                                <button class="btn btn-primary" ng-if="$last && question.answers.length < answersIndexes.length"
+                                <button class="btn btn-primary" ng-if="$last && question.Answers.length < answersIndexes.length"
                                         ng-click="addAnswer(question)">
                                     [ + ]
                                 </button>
@@ -92,7 +109,7 @@
 
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-primary pull-right" ng-disabled="testForm.$invalid || test.questions.length < 3">Save Test</button>
+                    <button class="btn btn-primary pull-right" ng-disabled="testForm.$invalid " ng-click="saveTest()">Save Test</button>
                 </div>
             </div>
         </form>

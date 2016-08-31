@@ -18,6 +18,9 @@
         }])
         .factory("CategoryService", ["$resource", function ($resource) {
             return $resource("/api/category", {}, serviceMetods);
+        }])
+        .factory("TestService", ["$resource", function ($resource) {
+            return $resource("/api/test", {}, serviceMetods);
         }]);
 
 }());
