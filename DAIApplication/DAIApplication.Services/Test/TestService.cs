@@ -139,6 +139,41 @@ namespace DAIApplication.Services.Test
             };
         }
 
+        public object UpdateTest(Data.Database.Test test, List<int> questionsIds)
+        {
+
+            var originalTest = _dbEntities.Tests.Find(test.Id);
+
+            if (originalTest != null)
+            {
+                originalTest.CategoryId = test.CategoryId;
+                originalTest.SubcategoryId = test.SubcategoryId;
+                originalTest.Name = test.Name;
+                originalTest.Time = test.Time;
+                _dbEntities.SaveChanges();
+            }
+
+            foreach (int questionId in questionsIds)
+            {
+                QuestionInTest qt = new QuestionInTest();
+                qt.QuestionId = questionId;
+                qt.TestId = test.Id;
+
+                _dbEntities.QuestionInTests.Add(qt);
+                _dbEntities.SaveChanges();
+            }
+
+            return new
+            {
+                success = true,
+                message = "Success",
+                data = new
+                {
+                    test.Id
+                }
+            };
+        }
+
         public object AddUserTest(UserTest userTest)
         {
             if (userTest.TestId == 0 || userTest.UserId == null)

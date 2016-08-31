@@ -8,6 +8,7 @@ namespace DAIApplication.Models
 {
     public class QuestionModel
     {
+        public int Id;
         public string Text;
         public int QTypeId;
         public List<AnswerModel> Answers;

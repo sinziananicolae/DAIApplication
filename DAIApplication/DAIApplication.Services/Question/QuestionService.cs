@@ -69,6 +69,22 @@ namespace DAIApplication.Services.Question
             return question.Id;
         }
 
+        public int UpdateQuestion(Data.Database.Question question, List<QAnswer> answers)
+        {
+
+            var originalQuestion = _dbEntities.Questions.Find(question.Id);
+
+            if (originalQuestion != null)
+            {
+                originalQuestion.Text = question.Text;
+                _dbEntities.SaveChanges();
+            }
+
+            _answerService.SaveAnswers(answers, question.Id);
+
+            return question.Id;
+        }
+
         public List<object> GetQuestionTypes()
         {
             List<object> allQuestionsTypesList = new List<object>();

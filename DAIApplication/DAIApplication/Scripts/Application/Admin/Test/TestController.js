@@ -7,6 +7,8 @@
     function testController($scope, toastr, $routeParams, qTypesService, categoryService, testService) {
         $scope.answersIndexes = ["a", "b", "c", "d", "e", "f", "g"];
         $scope.singleAnswers = {};
+        var removedAnswers = [];
+        var removedQuestions = [];
 
         $scope.test = {
             Questions: []
@@ -109,6 +111,7 @@
         }
 
         $scope.removeAnswer = function (question, index) {
+            if (question.Answers[index].Id) removedAnswers.push(question.Answers[index].Id);
             question.Answers.splice(index, 1);
         }
 
@@ -142,7 +145,7 @@
                 return;
             }
 
-            if (test.Id)
+            if (objToSave.Id)
                 editTest(objToSave);
             else
                 saveTest(objToSave);
@@ -159,7 +162,14 @@
         }
 
         function editTest(objToSave) {
-            
+            objToSave.RemovedAnswersIds = removedAnswers;
+            testService.update(objToSave, function (response) {
+                toastr.success("You have successfully added a new test!");
+                $scope.test = {
+                    Questions: []
+                };
+                $scope.singleAnswers = {};
+            });
         }
 
         function guid() {

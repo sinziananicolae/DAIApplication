@@ -109,7 +109,7 @@
 
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-primary pull-right" ng-disabled="testForm.$invalid" ng-click="saveTest()">Save Test</button>
+                    <button class="btn btn-primary pull-right" ng-disabled="testForm.$invalid || test.Questions.length < 5" ng-click="saveTest()">Save Test</button>
                 </div>
             </div>
         </form>

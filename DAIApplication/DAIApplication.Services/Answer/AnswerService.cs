@@ -39,9 +39,22 @@ namespace DAIApplication.Services.Answer
         {
             foreach (QAnswer answer in answers)
             {
-                answer.QuestionId = questionId;
+                if (answer.Id == 0)
+                {
+                    answer.QuestionId = questionId;
+                    _dbEntities.QAnswers.Add(answer);
+                }
+                else
+                {
+                    var originalAnswer = _dbEntities.QAnswers.Find(answer.Id);
 
-                _dbEntities.QAnswers.Add(answer);
+                    if (originalAnswer != null)
+                    {
+                        originalAnswer.Answer = answer.Answer;
+                        originalAnswer.Correct = answer.Correct;
+                    }
+                }
+
                 _dbEntities.SaveChanges();
             }
 
@@ -51,6 +64,12 @@ namespace DAIApplication.Services.Answer
                 message = "Success",
                 data = new { }
             };
+        }
+
+        public void RemoveAnswer(int answerId)
+        {
+            _dbEntities.QAnswers.Remove(_dbEntities.QAnswers.FirstOrDefault(f => f.Id == answerId));
+            _dbEntities.SaveChanges();
         }
     }
 }

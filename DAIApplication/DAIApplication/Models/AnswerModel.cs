@@ -8,6 +8,7 @@ namespace DAIApplication.Models
 {
     public class AnswerModel
     {
+        public int Id;
         public int QuestionId;
         public string Answer;
         public bool Correct;

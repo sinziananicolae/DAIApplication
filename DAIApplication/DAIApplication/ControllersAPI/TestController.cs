@@ -96,5 +96,68 @@ namespace DAIApplication.ControllersAPI
             return new { };
         }
 
+        // PUT api/test
+        public object Put([FromBody]TestModel test)
+        {
+            var userId = User.Identity.GetUserId();
+            List<int> questionsIds = new List<int>();
+
+            foreach (QuestionModel question in test.Questions)
+            {
+                Question currentQuestion = new Question
+                {
+                    QTypeId = question.QTypeId,
+                    Text = question.Text,
+                    UserId = userId,
+                    Id = question.Id
+                };
+
+                List<QAnswer> answersList = new List<QAnswer>();
+                foreach (AnswerModel answer in question.Answers)
+                {
+                    QAnswer currentAnswer = new QAnswer
+                    {
+                        Answer = answer.Answer,
+                        Correct = answer.Correct,
+                        Id = answer.Id
+                    };
+                    answersList.Add(currentAnswer);
+                }
+
+                if (question.Id == 0)
+                {
+                    var questionId = _questionService.AddQuestion(currentQuestion, answersList);
+                    questionsIds.Add(questionId);
+                }
+                else
+                {
+                    _questionService.UpdateQuestion(currentQuestion, answersList);
+                }
+            }
+
+            Test newTest = new Test
+            {
+                CategoryId = test.QCategoryId,
+                SubcategoryId = test.QSubcategoryId,
+                Name = test.Name,
+                Time = test.Time,
+                UserId = userId,
+                Id = test.Id
+            };
+
+            if (test.Id == 0)
+                _testService.AddTest(newTest, questionsIds);
+            else
+                _testService.UpdateTest(newTest, questionsIds);
+
+
+            foreach (int answerId in test.RemovedAnswersIds)
+            {
+                _answerService.RemoveAnswer(answerId);
+            }
+
+            return new { };
+        }
+
     }
 }
