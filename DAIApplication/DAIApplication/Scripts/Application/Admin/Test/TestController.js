@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("app")
-        .controller("TestCtrl", ["$scope", "toastr", "QTypesService", "CategoryService", "TestService", testController]);
+        .controller("TestCtrl", ["$scope", "toastr", "$routeParams", "QTypesService", "CategoryService", "TestService", testController]);
 
-    function testController($scope, toastr, qTypesService, categoryService, testService) {
+    function testController($scope, toastr, $routeParams, qTypesService, categoryService, testService) {
         $scope.answersIndexes = ["a", "b", "c", "d", "e", "f", "g"];
         $scope.singleAnswers = {};
 
@@ -24,6 +24,54 @@
             $scope.subCategories = _.findWhere($scope.categories, { Id: categoryId }).Subcategories;
         };
 
+        if ($routeParams.id) {
+            testService.get({ id: $routeParams.id }, function (response) {
+                var test = response.data;
+                $scope.test = {
+                    Id: test.Id,
+                    Name: test.Name,
+                    QCategoryId: test.Category.Id,
+                    QSubcategoryId: test.Subcategory.Id,
+                    Time: test.Time,
+                    Questions: []
+                };
+                $scope.setSubcategories(test.Category.Id);
+
+                _.each(test.Questions, function(question) {
+                    addQuestion(question);
+                });
+            });
+        }
+
+        function addQuestion(question) {
+            var q = {
+                Text: question.Text,
+                QTypeId: question.QTypeId,
+                Guid: guid(),
+                Answers: [],
+                Id: question.Id
+            };
+            
+            _.each(question.Answers, function(answer) {
+                addAnswer(answer, q);
+            });
+
+            $scope.test.Questions.push(q);
+        }
+
+        function addAnswer(answer, q) {
+            var a = {
+                Answer: answer.Answer,
+                Id: answer.Id,
+                Guid: guid(),
+                Correct: answer.Correct
+            };
+            q.Answers.push(a);
+
+            if (q.QTypeId === 1 && answer.Correct) {
+                $scope.singleAnswers[q.Guid] = a.Guid;
+            }
+        }
 
         $scope.addQuestion = function () {
             var newGuid = guid();
@@ -66,16 +114,16 @@
 
         $scope.saveTest = function () {
             var cannotSave = null;
-            
+
             var objToSave = $scope.test;
-            _.find(objToSave.Questions, function(question, index) {
+            _.find(objToSave.Questions, function (question, index) {
                 if (question.QTypeId === 1) {
                     if (!$scope.singleAnswers[question.Guid]) {
                         cannotSave = index + 1;
                         return true;
                     }
                     _.find(question.Answers,
-                        function(answer) {
+                        function (answer) {
                             if (answer.Guid === $scope.singleAnswers[question.Guid]) {
                                 answer.Correct = true;
                                 return true;
@@ -94,7 +142,24 @@
                 return;
             }
 
-            testService.save(objToSave, function (response) { });
+            if (test.Id)
+                editTest(objToSave);
+            else
+                saveTest(objToSave);
+        }
+
+        function saveTest(objToSave) {
+            testService.save(objToSave, function (response) {
+                toastr.success("You have successfully added a new test!");
+                $scope.test = {
+                    Questions: []
+                };
+                $scope.singleAnswers = {};
+            });
+        }
+
+        function editTest(objToSave) {
+            
         }
 
         function guid() {

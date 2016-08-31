@@ -27,7 +27,8 @@ namespace DAIApplication.Services.Answer
                 allAnswersList.Add(new
                 {
                     answer.Id,
-                    answer.Answer
+                    answer.Answer,
+                    answer.Correct
                 });
             }
 

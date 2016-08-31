@@ -99,7 +99,7 @@
                         <div class="col-md-3 col-xs-12" ng-class="{'has-error': !selectedQType }">
                             <select class="form-control select"
                                     ng-options="qType.Name for qType in qTypesList"
-                                    ng-model="selectedQType" required>
+                                    ng-model="selectedQType">
                             </select>
                         </div>
                         <div class="col-md-3 col-xs-12">
@@ -109,7 +109,7 @@
 
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-primary pull-right" ng-disabled="testForm.$invalid " ng-click="saveTest()">Save Test</button>
+                    <button class="btn btn-primary pull-right" ng-disabled="testForm.$invalid" ng-click="saveTest()">Save Test</button>
                 </div>
             </div>
         </form>

@@ -13,16 +13,20 @@
     ]).config(["$routeProvider",
         function ($routeProvider) {
             $routeProvider.
-            when("/dashboard", {
+            when("/admin-dashboard", {
                 templateUrl: "Scripts/Application/Admin/Dashboard/Views/dashboard.html",
-                controller: "DashboardCtrl"
+                controller: "AdminDashboardCtrl"
             }).
             when("/createTest", {
                 templateUrl: "Scripts/Application/Admin/Test/Views/test.html",
                 controller: "TestCtrl"
             }).
+                when("/edit-test/:id", {
+                    templateUrl: "Scripts/Application/Admin/Test/Views/test.html",
+                    controller: "TestCtrl"
+                }).
             otherwise({
-                redirectTo: "/dashboard"
+                redirectTo: "/admin-dashboard"
             });
         }]).controller("GreetingController", ["$scope", "StoreService", "UserService", "toastr", function ($scope, storeService, userService, toastr) {
             $scope.loading = true;
@@ -38,8 +42,8 @@
                 $scope.loading = false;
             });
 
-            $scope.logOff = function() {
+            $scope.logOff = function () {
                 window.location.href = "/Account/LogOff";
             }
-    }]);;
+        }]);;
 }());

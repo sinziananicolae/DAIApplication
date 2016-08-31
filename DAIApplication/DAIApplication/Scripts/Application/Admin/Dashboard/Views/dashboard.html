@@ -1,1 +1,73 @@
-aaaaaaaaaa
+<div class="row" style="margin-top: 60px">
+    <div class="col-md-4">
+
+        <!-- START PROJECTS BLOCK -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title-box">
+                    <h3>Tests</h3>
+                    <span>Tests activity</span>
+                </div>
+            </div>
+            <div class="panel-body panel-body-table">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Subcategory</th>
+                            <th>Time</th>
+                            <th>Questions No.</th>
+                            <th>Visits</th>
+                            <th>Avg. Score</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="test in tests">
+                            <td width="30%"><strong><a ng-href="#/edit-test/{{test.Id}}">{{test.Name}}</a></strong></td>
+                            <td>{{test.Category.Name}}</td>
+                            <td>{{test.Subcategory.Name}}</td>
+                            <td>{{test.Time}}</td>
+                            <th>{{test.QuestionsNo}}</th>
+                            <th>{{test.Visits}}</th>
+                            <td>{{test.AvgScore}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <!-- END PROJECTS BLOCK -->
+
+    </div>
+    <div class="col-md-3">
+
+        <!-- START WIDGET REGISTRED -->
+        <div class="widget widget-default widget-item-icon">
+            <div class="widget-item-left">
+                <span class="fa fa-user"></span>
+            </div>
+            <div class="widget-data">
+                <div class="widget-int num-count">{{totalVisitorsNo}}</div>
+                <div class="widget-title">Accessed tests</div>
+                <div class="widget-subtitle">Total</div>
+            </div>
+        </div>
+        <!-- END WIDGET REGISTRED -->
+
+    </div>
+
+    <div class="col-md-3">
+
+        <!-- START WIDGET CLOCK -->
+        <div class="widget widget-info widget-padding-sm">
+            <div class="widget-big-int plugin-clock">{{currentTime}}</div>
+            <div class="widget-subtitle plugin-date">{{currentDate}}</div>
+        </div>
+        <!-- END WIDGET CLOCK -->
+
+    </div>
+</div>

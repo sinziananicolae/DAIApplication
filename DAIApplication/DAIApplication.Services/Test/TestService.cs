@@ -67,13 +67,53 @@ namespace DAIApplication.Services.Test
                     currentTest.Subcategory.Id,
                     currentTest.Subcategory.Name
                 },
+                currentTest.Time,
                 Questions = _questionService.GetQuestionsByTestId(currentTest.Id)
             };
 
             return test;
         }
 
-        public object AddTest(Data.Database.Test test, IList<int> questionsIds)
+        public List<object> GetTestsByUserId(string userId)
+        {
+            List<object> allTestsList = new List<object>();
+
+            IEnumerable<Data.Database.Test> allTests = _dbEntities.Tests.ToList().Where(f=> f.UserId == userId);
+            foreach (Data.Database.Test test in allTests)
+            {
+                IEnumerable<UserTest> performedTests = _dbEntities.UserTests.ToList().Where(f => f.TestId == test.Id);
+
+                var sumScore = 0;
+                foreach (UserTest performedTest in performedTests)
+                {
+                    sumScore += performedTest.Score;
+                }
+
+                allTestsList.Add(new
+                {
+                    test.Id,
+                    Category = new
+                    {
+                        test.Category.Id,
+                        test.Category.Name
+                    },
+                    Subcategory = new
+                    {
+                        test.Subcategory.Id,
+                        test.Subcategory.Name
+                    },
+                    test.Name,
+                    QuestionsNo = test.QuestionInTests.Count,
+                    test.Time,
+                    Visits = test.UserTests.Count,
+                    AvgScore = test.UserTests.Count == 0 ? 0 : sumScore / test.UserTests.Count
+                });
+            }
+
+            return allTestsList;
+        }
+
+        public object AddTest(Data.Database.Test test, List<int> questionsIds)
         {
             _dbEntities.Tests.Add(test);
             _dbEntities.SaveChanges();

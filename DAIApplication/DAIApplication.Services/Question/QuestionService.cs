@@ -56,29 +56,17 @@ namespace DAIApplication.Services.Question
             return allQuestionsList;
         }
 
-        public object AddQuestion(Data.Database.Question question, IList<QAnswer> answers)
+        public int AddQuestion(Data.Database.Question question, List<QAnswer> answers)
         {
             if (question.QTypeId == 0 || question.Text == null || question.UserId == null)
-                return new
-                {
-                    success = false,
-                    message = "Field missing"
-                };
+                return -1;
 
             _dbEntities.Questions.Add(question);
             _dbEntities.SaveChanges();
 
             _answerService.SaveAnswers(answers, question.Id);
 
-            return new
-            {
-                success = true,
-                message = "Success",
-                data = new
-                {
-                    question.Id
-                }
-            };
+            return question.Id;
         }
 
         public List<object> GetQuestionTypes()
