@@ -41,6 +41,20 @@ namespace DAIApplication.ControllersAPI
         }
 
         [HttpGet]
+        [Route("api/test/all")]
+        public object GetAllTests()
+        {
+            var tests = _testService.GetAllTests();
+
+            return new
+            {
+                success = true,
+                data = tests
+            };
+        }
+
+
+        [HttpGet]
         public object Get(int id)
         {
             var test = _testService.GetTestById(id);

@@ -1,1 +1,44 @@
-user
+<div class="content-frame">
+
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-image"></span> Gallery</h2>
+        </div>
+    </div>
+
+    <!-- START CONTENT FRAME RIGHT -->
+    <div class="content-frame-right">
+        <h4>Categories:</h4>
+        <div class="list-group border-bottom push-down-20">
+            <div class="list-group-item cursor-pointer" ng-class="{'active': selectedCategory.Id === category.Id}"
+                 ng-repeat="category in categories" ng-click="selectCategory(category)">{{category.Name}}<span class="badge badge-primary">{{category.TestsNo}}</span></div>
+            <a class="pull-right cursor-pointer" ng-click="clearCategoryFilter()">Clear filter Category selection</a>
+        </div>
+
+        <div ng-if="selectedCategory">
+            <h4>Subcategories:</h4>
+            <div class="list-group border-bottom push-down-20">
+                <div class="list-group-item cursor-pointer" ng-class="{'active': selectedSubCategory.Id === subCategory.Id}"
+                     ng-repeat="subCategory in subCategories" ng-click="selectSubcategory(subCategory)">{{subCategory.Name}}<span class="badge badge-primary">{{subCategory.TestsNo}}</span></div>
+                <a class="pull-right cursor-pointer" ng-click="selectCategory(selectedCategory)">Clear filter SubCategory selection</a>
+            </div>
+        </div>
+    </div>
+    <!-- END CONTENT FRAME RIGHT -->
+    <!-- START CONTENT FRAME BODY -->
+    <div class="content-frame-body content-frame-body-left">
+        <div class="gallery" ng-repeat="test in filteredTests">
+
+            <a class="gallery-item" title="Nature Image 1">
+                <div class="meta">
+                    <strong>sdasdsa</strong>
+                    <span>Description</span>
+                </div>
+            </a>
+
+
+        </div>
+    </div>
+    <!-- END CONTENT FRAME BODY -->
+</div>

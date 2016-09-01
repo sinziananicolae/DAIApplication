@@ -30,17 +30,12 @@ namespace DAIApplication.Services.Test
                 allTestsList.Add(new
                 {
                     test.Id,
-                    Category = new
-                    {
-                        test.Category.Id,
-                        test.Category.Name
-                    },
-                    Subcategory = new
-                    {
-                        test.Subcategory.Id,
-                        test.Subcategory.Name
-                    },
+                    CategoryId = test.Category.Id,
+                    CategoryName = test.Category.Name,
+                    SubcategoryId = test.Subcategory.Id,
+                    SubcategoryName = test.Subcategory.Name,
                     test.Name,
+                    test.Time,
                     QuestionsNo = test.QuestionInTests.Count
                 });
             }

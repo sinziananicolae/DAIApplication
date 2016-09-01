@@ -10,7 +10,7 @@
 
         this.getUserRole = function () {
 
-            return this.user.Role;
+            return this.user.UserRole;
 
         };
 
