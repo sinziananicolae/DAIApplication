@@ -29,13 +29,20 @@
     <!-- START CONTENT FRAME BODY -->
     <div class="content-frame-body content-frame-body-left">
         <div class="col-md-3 test-list-item" ng-repeat="test in filteredTests">
-            <strong class="page-title"><h2 class="font-22"><span class="fa fa-file-text"></span> {{test.Name}}</h2></strong>
+            <strong class="page-title">
+                <h2 class="font-22"><span class="fa fa-file-text"></span> {{test.Name}}
+                </h2></strong>
             <div>
                 <a><span class="fa fa-tag"></span> {{test.CategoryName}} </a>
                 <a><span class="fa fa-tag"></span> {{test.SubcategoryName}} </a>
             </div>
+
+            <span class="font-12">Created at: {{test.Timestamp | showCreatedDate }}</span>
+
             <div>{{test.Time}} minute(s)</div>
             <div>{{test.QuestionsNo}} questions</div>
+            <div class="font-12">Taken: {{test.TestResults.length}} times</div>
+            <div class="font-12">Avg: {{calculateAvgScore(test)}}</div>
             <button class="btn btn-success pull-right" title="Take test" ng-click="takeTest(test)"><i class="fa fa-play"></i></button>
         </div>
     </div>

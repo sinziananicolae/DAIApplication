@@ -49,5 +49,11 @@
         $scope.takeTest = function(test) {
             $location.path("/take-test/" + test.Id);
         }
+
+        $scope.calculateAvgScore = function(test) {
+            var totalScore = 0;
+            _.each(test.TestResults, function (result) { totalScore += result.Score });
+            return test.TestResults.length ? totalScore / test.TestResults.length : 0;
+        }
     }
 }());

@@ -32,6 +32,16 @@
 
             return input;
         };
+    })
+
+    .filter('showCreatedDate', function () {
+        return function (input) {
+            if (input !== undefined && input !== null) {
+                return moment(new Date(input)).utc().format('DD MMMM YYYY hh:mm:ss A');;
+            }
+
+            return "-";
+        };
     });
 
 }());

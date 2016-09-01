@@ -88,7 +88,7 @@
 
             var objToSend = {
                 TestId: $scope.test.Id,
-                Time: $scope.remainingMinutes * 60 + $scope.remainingSeconds,
+                Time: $scope.test.Time * 60 - $scope.remainingMinutes * 60 - $scope.remainingSeconds,
                 Answers: {}
             };
 

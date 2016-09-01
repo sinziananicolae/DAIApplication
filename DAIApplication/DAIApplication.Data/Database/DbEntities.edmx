@@ -124,6 +124,7 @@
           <Property Name="CategoryId" Type="int" />
           <Property Name="SubcategoryId" Type="int" />
           <Property Name="Time" Type="int" />
+          <Property Name="Timestamp" Type="datetime" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -148,6 +149,7 @@
           <Property Name="Score" Type="int" Nullable="false" />
           <Property Name="Time" Type="int" />
           <Property Name="MaxScore" Type="int" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -656,6 +658,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <Property Name="CategoryId" Type="Int32" />
           <Property Name="SubcategoryId" Type="Int32" />
           <Property Name="Time" Type="Int32" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Category" Relationship="Model.FK__Test__CategoryId__59FA5E80" FromRole="Test" ToRole="Category" />
           <NavigationProperty Name="QuestionInTests" Relationship="Model.FK__QuestionI__TestI__5DCAEF64" FromRole="Test" ToRole="QuestionInTest" />
           <NavigationProperty Name="Subcategory" Relationship="Model.FK__Test__Subcategor__5AEE82B9" FromRole="Test" ToRole="Subcategory" />
@@ -688,6 +691,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <Property Name="Score" Type="Int32" Nullable="false" />
           <Property Name="Time" Type="Int32" />
           <Property Name="MaxScore" Type="Int32" Nullable="false" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Test" Relationship="Model.FK__UserTest__TestId__628FA481" FromRole="UserTest" ToRole="Test" />
           <NavigationProperty Name="UserProfile" Relationship="Model.FK__UserTest__UserId__6B24EA82" FromRole="UserTest" ToRole="UserProfile" />
         </EntityType>
@@ -997,6 +1001,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <EntitySetMapping Name="Tests">
             <EntityTypeMapping TypeName="Model.Test">
               <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="SubcategoryId" ColumnName="SubcategoryId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
@@ -1023,6 +1028,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <EntitySetMapping Name="UserTests">
             <EntityTypeMapping TypeName="Model.UserTest">
               <MappingFragment StoreEntitySet="UserTest">
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="MaxScore" ColumnName="MaxScore" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Score" ColumnName="Score" />

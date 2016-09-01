@@ -36,7 +36,9 @@ namespace DAIApplication.Services.Test
                     SubcategoryName = test.Subcategory.Name,
                     test.Name,
                     test.Time,
-                    QuestionsNo = test.QuestionInTests.Count
+                    test.Timestamp,
+                    QuestionsNo = test.QuestionInTests.Count,
+                    TestResults = test.UserTests.Select(f => new { f.Time, f.Score }).ToList()
                 });
             }
 
@@ -63,7 +65,8 @@ namespace DAIApplication.Services.Test
                     currentTest.Subcategory.Name
                 },
                 currentTest.Time,
-                Questions = _questionService.GetQuestionsByTestId(currentTest.Id, userRole)
+                Questions = _questionService.GetQuestionsByTestId(currentTest.Id, userRole),
+                currentTest.Timestamp
             };
 
             return test;
@@ -101,7 +104,8 @@ namespace DAIApplication.Services.Test
                     QuestionsNo = test.QuestionInTests.Count,
                     test.Time,
                     Visits = test.UserTests.Count,
-                    AvgScore = test.UserTests.Count == 0 ? 0 : sumScore / test.UserTests.Count
+                    AvgScore = test.UserTests.Count == 0 ? 0 : sumScore / test.UserTests.Count,
+                    test.Timestamp
                 });
             }
 
@@ -110,6 +114,7 @@ namespace DAIApplication.Services.Test
 
         public object AddTest(Data.Database.Test test, List<int> questionsIds)
         {
+            test.Timestamp = DateTime.Now;
             _dbEntities.Tests.Add(test);
             _dbEntities.SaveChanges();
 
@@ -178,6 +183,7 @@ namespace DAIApplication.Services.Test
                     message = "Field missing"
                 };
 
+            userTest.Timestamp = DateTime.Now;
             _dbEntities.UserTests.Add(userTest);
             _dbEntities.SaveChanges();
 

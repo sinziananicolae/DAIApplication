@@ -20,6 +20,7 @@ namespace DAIApplication.Data.Database
         public int Score { get; set; }
         public Nullable<int> Time { get; set; }
         public int MaxScore { get; set; }
+        public Nullable<System.DateTime> Timestamp { get; set; }
     
         public virtual Test Test { get; set; }
         public virtual UserProfile UserProfile { get; set; }
