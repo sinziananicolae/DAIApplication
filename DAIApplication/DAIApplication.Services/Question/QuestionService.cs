@@ -16,26 +16,7 @@ namespace DAIApplication.Services.Question
             _answerService = new AnswerService();
         }
 
-        public List<object> GetAllQuestions()
-        {
-            List<object> allQuestionsList = new List<object>();
-
-            IEnumerable<Data.Database.Question> allQuestions = _dbEntities.Questions.ToList();
-            foreach (Data.Database.Question question in allQuestions)
-            {
-                allQuestionsList.Add(new
-                {
-                    question.Id,
-                    question.QTypeId,
-                    question.Text,
-                    Answers = _answerService.GetAllAnswersForQuestion(question.Id)
-                });
-            }
-
-            return allQuestionsList;
-        }
-
-        public List<object> GetQuestionsByTestId(int testId)
+        public List<object> GetQuestionsByTestId(int testId, string userRole)
         {
             List<object> allQuestionsList = new List<object>();
 
@@ -49,7 +30,7 @@ namespace DAIApplication.Services.Question
                         question.Id,
                         question.QTypeId,
                         question.Text,
-                        Answers = _answerService.GetAllAnswersForQuestion(question.Id)
+                        Answers = _answerService.GetAllAnswersForQuestion(question.Id, userRole)
                     });
             }
 

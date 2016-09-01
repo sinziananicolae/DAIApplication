@@ -1,0 +1,54 @@
+﻿<div class="row">
+    <div class="col-md-12">
+
+        <form class="form-horizontal" id="testForm" name="testForm">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>New</strong> Test</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group col-md-12">
+                        <strong class="page-title">
+                            <h2 class="font-22"><span class="fa fa-file-text"></span> {{test.Name}}
+                            </h2></strong>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <strong class="page-title">
+                            <h2 class="font-22" ng-class="{'color-red': remainingMinutes === 0 && remainingSeconds < 11}">
+                                <span class="fa fa-clock-o" ></span> {{remainingMinutes | showTime}} : {{remainingSeconds | showTime}}
+                            </h2></strong>
+                    </div>
+
+
+                    <div class="form-group" ng-repeat="question in test.Questions">
+                        <label class="col-md-3 col-xs-12 control-label">Question {{$index + 1}}: {{question.Text}}</label>
+                        <div class="col-md-12 col-xs-12" ng-repeat="answer in question.Answers" ng-if="question.QTypeId === 1">
+                            <label class="col-md-3 col-xs-12 control-label">{{answersIndexes[$index]}}.</label>
+                            <div class="col-md-9 col-xs-12" id="answer.Id">
+                                <label class="check" style="display: inline-flex;">
+                                    <input type="radio" class="pick-answer" ng-model="singleAnswers[question.Guid]" name="Correct{{question.Guid}}" value="{{answer.Guid}}" />
+                                    <span class="form-control">{{answer.Answer}}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12" ng-repeat="answer in question.Answers track by $index" ng-if="question.QTypeId === 2">
+                            <label class="col-md-3 col-xs-12 control-label">{{answersIndexes[$index]}}.</label>
+                            <div class="col-md-9 col-xs-12">
+                                <label class="check" style="display: inline-flex;">
+                                    <input type="checkbox" class="pick-answer" ng-model="answer.Correct" />
+                                    <span class="form-control">{{answer.Answer}}</span>
+                                </label>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-primary pull-right" ng-click="submitTest()" ng-if="!testIsOver">Submit Test</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>                   

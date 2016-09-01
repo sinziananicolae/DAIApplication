@@ -17,7 +17,7 @@ namespace DAIApplication.Services.Answer
             _dbEntities = new DbEntities();
         }
 
-        public object GetAllAnswersForQuestion(int questionId)
+        public object GetAllAnswersForQuestion(int questionId, string userRole)
         {
             IEnumerable<QAnswer> allAnswers = _dbEntities.QAnswers.Where(f => f.QuestionId == questionId).ToList();
             List<object> allAnswersList = new List<object>();
@@ -28,7 +28,7 @@ namespace DAIApplication.Services.Answer
                 {
                     answer.Id,
                     answer.Answer,
-                    answer.Correct
+                    Correct = userRole == "1" && answer.Correct
                 });
             }
 

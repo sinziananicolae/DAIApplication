@@ -22,6 +22,16 @@
 
             return input;
         };
+    })
+
+    .filter('showTime', function () {
+        return function (input) {
+            if (input !== undefined && input.toString().length === 1) {
+                return "0" + input;
+            }
+
+            return input;
+        };
     });
 
 }());

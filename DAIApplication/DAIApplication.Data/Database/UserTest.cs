@@ -18,7 +18,7 @@ namespace DAIApplication.Data.Database
         public string UserId { get; set; }
         public int TestId { get; set; }
         public int Score { get; set; }
-        public string Time { get; set; }
+        public Nullable<int> Time { get; set; }
         public int MaxScore { get; set; }
     
         public virtual Test Test { get; set; }

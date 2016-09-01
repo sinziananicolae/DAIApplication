@@ -146,7 +146,7 @@
           <Property Name="UserId" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="TestId" Type="int" Nullable="false" />
           <Property Name="Score" Type="int" Nullable="false" />
-          <Property Name="Time" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Time" Type="int" />
           <Property Name="MaxScore" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -282,7 +282,9 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__UserTest__TestId__628FA481">
-          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UserTest" Type="Self.UserTest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Test">
@@ -684,7 +686,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="TestId" Type="Int32" Nullable="false" />
           <Property Name="Score" Type="Int32" Nullable="false" />
-          <Property Name="Time" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Time" Type="Int32" />
           <Property Name="MaxScore" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Test" Relationship="Model.FK__UserTest__TestId__628FA481" FromRole="UserTest" ToRole="Test" />
           <NavigationProperty Name="UserProfile" Relationship="Model.FK__UserTest__UserId__6B24EA82" FromRole="UserTest" ToRole="UserProfile" />
@@ -848,7 +850,9 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__UserTest__TestId__628FA481">
-          <End Type="Model.Test" Role="Test" Multiplicity="1" />
+          <End Type="Model.Test" Role="Test" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="Model.UserTest" Role="UserTest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Test">

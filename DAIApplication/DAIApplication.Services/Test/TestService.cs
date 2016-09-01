@@ -43,7 +43,7 @@ namespace DAIApplication.Services.Test
             return allTestsList;
         }
 
-        public object GetTestById(int testId)
+        public object GetTestById(int testId, string userRole)
         {
 
             var currentTest = _dbEntities.Tests.FirstOrDefault(f => f.Id == testId);
@@ -63,7 +63,7 @@ namespace DAIApplication.Services.Test
                     currentTest.Subcategory.Name
                 },
                 currentTest.Time,
-                Questions = _questionService.GetQuestionsByTestId(currentTest.Id)
+                Questions = _questionService.GetQuestionsByTestId(currentTest.Id, userRole)
             };
 
             return test;
@@ -192,26 +192,42 @@ namespace DAIApplication.Services.Test
             };
         }
 
-        public object AssessTest(int testId, IList<int> answersIds, string time, string userId)
+        public object AssessTest(int testId, Dictionary<int, List<int>> answers, int time, string userId)
         {
-            var maximumScore = answersIds.Count();
-            int currentScore = 0;
+            Data.Database.Test test = _dbEntities.Tests.FirstOrDefault(f => f.Id == testId);
+            var maximumScore = test.QuestionInTests.Count;
+            var currentScore = 0;
 
-            foreach (int answerId in answersIds)
+            foreach (var kvp in answers)
             {
-                var answer = _dbEntities.QAnswers.FirstOrDefault(f => f.Id == answerId);
-                if (answer.Correct)
+                var questionId = kvp.Key;
+                List<int> chosenAnswers = kvp.Value;
+
+                Data.Database.Question question = _dbEntities.Questions.FirstOrDefault(f => f.Id == questionId);
+                if (question.QTypeId == 1 && chosenAnswers.Count > 0)
                 {
-                    currentScore++;
+                    var answer = question.QAnswers.FirstOrDefault(f => f.Correct == true);
+                    if (answer.Id == chosenAnswers[0])
+                    {
+                        currentScore += 1;
+                    }
+                } else if (chosenAnswers.Count > 0)
+                {
+                    var correctAnswers = _dbEntities.QAnswers.Where(f => f.QuestionId == question.Id && f.Correct).Select(item => item.Id).ToList();
+                    var isEqual = new HashSet<int>(chosenAnswers).SetEquals(correctAnswers);
+                    if(isEqual)
+                        currentScore += 1;
                 }
             }
 
-            UserTest ut = new UserTest();
-            ut.TestId = testId;
-            ut.UserId = userId;
-            ut.MaxScore = maximumScore;
-            ut.Score = currentScore;
-            ut.Time = time;
+            UserTest ut = new UserTest
+            {
+                TestId = testId,
+                UserId = userId,
+                MaxScore = maximumScore,
+                Score = currentScore,
+                Time = time
+            };
 
             AddUserTest(ut);
 
@@ -244,12 +260,12 @@ namespace DAIApplication.Services.Test
                     _dbEntities.SaveChanges();
                 }
 
-                foreach (UserTest userTest in testToDelete.UserTests)
-                {
-                    var userTestToDelete = _dbEntities.UserTests.Find(userTest.Id);
-                    _dbEntities.UserTests.Remove(userTestToDelete);
-                    _dbEntities.SaveChanges();
-                }
+                //foreach (UserTest userTest in testToDelete.UserTests)
+                //{
+                //    var userTestToDelete = _dbEntities.UserTests.Find(userTest.Id);
+                //    _dbEntities.UserTests.Remove(userTestToDelete);
+                //    _dbEntities.SaveChanges();
+                //}
             }
             catch (Exception e)
             {
@@ -257,7 +273,7 @@ namespace DAIApplication.Services.Test
                 return new
                 {
                     success = false,
-                    message = e.InnerException,
+                    message = e.Message,
                     data = new { }
                 };
             }

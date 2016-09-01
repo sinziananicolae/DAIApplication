@@ -94,7 +94,9 @@ namespace DAIApplication
                     "~/Scripts/Application/config.js",
                     "~/Scripts/Application/Admin/Dashboard/DashboardController.js",
                     "~/Scripts/Application/User/Dashboard/DashboardController.js",
-                    "~/Scripts/Application/Admin/Test/TestController.js"
+                    "~/Scripts/Application/Admin/Test/TestController.js",
+                    "~/Scripts/Application/User/Test/TestController.js"
+
                      ));
             #endregion
         }

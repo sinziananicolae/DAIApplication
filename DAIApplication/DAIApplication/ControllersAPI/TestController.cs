@@ -9,7 +9,9 @@ using DAIApplication.Models;
 using DAIApplication.Services.Answer;
 using DAIApplication.Services.Question;
 using DAIApplication.Services.Test;
+using DAIApplication.Services.UserService;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DAIApplication.ControllersAPI
 {
@@ -18,12 +20,19 @@ namespace DAIApplication.ControllersAPI
         private QuestionService _questionService;
         private AnswerService _answerService;
         private TestService _testService;
+        private UserService _userService;
+        private UserManager<ApplicationUser> UserManager { get; set; }
+        private ApplicationDbContext ApplicationDbContext { get; set; }
+
 
         public TestController()
         {
             _questionService = new QuestionService();
             _answerService = new AnswerService();
             _testService = new TestService();
+            _userService = new UserService();
+            ApplicationDbContext = new ApplicationDbContext();
+            UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(this.ApplicationDbContext));
         }
 
         // GET api/test
@@ -53,11 +62,14 @@ namespace DAIApplication.ControllersAPI
             };
         }
 
-
         [HttpGet]
+        [Route("api/test/{id}")]
         public object Get(int id)
         {
-            var test = _testService.GetTestById(id);
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var userRole = _userService.GetUserRole(user.Email);
+
+            var test = _testService.GetTestById(id, userRole);
 
             return new
             {
@@ -174,6 +186,7 @@ namespace DAIApplication.ControllersAPI
         }
 
         [HttpDelete]
+        [Route("api/test/{id}")]
         public object Delete(int id)
         {
             var test = _testService.DeleteTest(id);
@@ -182,6 +195,20 @@ namespace DAIApplication.ControllersAPI
             {
                 success = true,
                 data = test
+            };
+        }
+
+        [HttpPost]
+        [Route("api/test/{id}")]
+        public object SubmitTest(int id, [FromBody] TestSubmissionModel test)
+        {
+            var userId = User.Identity.GetUserId();
+            var tests = _testService.AssessTest(id, test.Answers, test.Time, userId);
+
+            return new
+            {
+                success = true,
+                data = tests
             };
         }
     }

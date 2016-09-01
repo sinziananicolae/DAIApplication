@@ -8,6 +8,7 @@
         "ngAnimate",
         "services",
         "directives",
+        "filters",
         "directivesTheme",
         "toastr"
     ]).config(["$routeProvider",
@@ -36,6 +37,10 @@
                 when("/edit-test/:id", {
                     templateUrl: "Scripts/Application/Admin/Test/Views/test.html",
                     controller: "TestCtrl"
+                }).
+                when("/take-test/:id", {
+                    templateUrl: "Scripts/Application/User/Test/Views/test.html",
+                    controller: "TakeTestCtrl"
                 }).
                 when("/user-dashboard", {
                     templateUrl: "Scripts/Application/User/Dashboard/Views/dashboard.html",
