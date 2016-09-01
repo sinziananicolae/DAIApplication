@@ -78,7 +78,7 @@ namespace DAIApplication.Services.Test
         {
             List<object> allTestsList = new List<object>();
 
-            IEnumerable<Data.Database.Test> allTests = _dbEntities.Tests.ToList().Where(f=> f.UserId == userId);
+            IEnumerable<Data.Database.Test> allTests = _dbEntities.Tests.ToList().Where(f => f.UserId == userId);
             foreach (Data.Database.Test test in allTests)
             {
                 IEnumerable<UserTest> performedTests = _dbEntities.UserTests.ToList().Where(f => f.TestId == test.Id);
@@ -220,6 +220,52 @@ namespace DAIApplication.Services.Test
 
             AddUserTest(ut);
 
+            return new
+            {
+                success = true,
+                message = "Success",
+                data = new { }
+            };
+        }
+
+        public object DeleteTest(int id)
+        {
+            try
+            {
+                var testToDelete = _dbEntities.Tests.Find(id);
+                List<int> qIds = new List<int>();
+                foreach (QuestionInTest question in testToDelete.QuestionInTests)
+                {
+                    qIds.Add(question.QuestionId);
+                }
+
+                _dbEntities.Tests.Remove(testToDelete);
+                _dbEntities.SaveChanges();
+
+                foreach (int qId in qIds)
+                {
+                    var questionToDelete = _dbEntities.Questions.Find(qId);
+                    _dbEntities.Questions.Remove(questionToDelete);
+                    _dbEntities.SaveChanges();
+                }
+
+                foreach (UserTest userTest in testToDelete.UserTests)
+                {
+                    var userTestToDelete = _dbEntities.UserTests.Find(userTest.Id);
+                    _dbEntities.UserTests.Remove(userTestToDelete);
+                    _dbEntities.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+
+                return new
+                {
+                    success = false,
+                    message = e.InnerException,
+                    data = new { }
+                };
+            }
             return new
             {
                 success = true,

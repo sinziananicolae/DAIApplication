@@ -1,7 +1,5 @@
 <div class="row" style="margin-top: 60px">
     <div class="col-md-4">
-
-        <!-- START PROJECTS BLOCK -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="panel-title-box">
@@ -22,6 +20,7 @@
                             <th>Questions No.</th>
                             <th>Visits</th>
                             <th>Avg. Score</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -33,19 +32,16 @@
                             <th>{{test.QuestionsNo}}</th>
                             <th>{{test.Visits}}</th>
                             <td>{{test.AvgScore}}</td>
+                            <td><i class="glyphicon glyphicon-trash cursor-pointer" ng-click="removeTest(test)"></i></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
-        <!-- END PROJECTS BLOCK -->
-
     </div>
-    <div class="col-md-3">
 
-        <!-- START WIDGET REGISTRED -->
+    <div class="col-md-3">
         <div class="widget widget-default widget-item-icon">
             <div class="widget-item-left">
                 <span class="fa fa-user"></span>
@@ -56,18 +52,12 @@
                 <div class="widget-subtitle">Total</div>
             </div>
         </div>
-        <!-- END WIDGET REGISTRED -->
-
     </div>
 
     <div class="col-md-3">
-
-        <!-- START WIDGET CLOCK -->
         <div class="widget widget-info widget-padding-sm">
             <div class="widget-big-int plugin-clock">{{currentTime}}</div>
             <div class="widget-subtitle plugin-date">{{currentDate}}</div>
         </div>
-        <!-- END WIDGET CLOCK -->
-
     </div>
 </div>

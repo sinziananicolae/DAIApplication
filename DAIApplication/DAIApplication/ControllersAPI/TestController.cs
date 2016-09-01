@@ -159,5 +159,16 @@ namespace DAIApplication.ControllersAPI
             return new { };
         }
 
+        [HttpDelete]
+        public object Delete(int id)
+        {
+            var test = _testService.DeleteTest(id);
+
+            return new
+            {
+                success = true,
+                data = test
+            };
+        }
     }
 }

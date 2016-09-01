@@ -206,7 +206,9 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__QuestionI__Quest__5EBF139D">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="QuestionInTest" Type="Self.QuestionInTest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Question">
@@ -794,7 +796,9 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__QuestionI__Quest__5EBF139D">
-          <End Type="Model.Question" Role="Question" Multiplicity="1" />
+          <End Type="Model.Question" Role="Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="Model.QuestionInTest" Role="QuestionInTest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Question">
