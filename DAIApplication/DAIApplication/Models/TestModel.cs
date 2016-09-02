@@ -15,6 +15,6 @@ namespace DAIApplication.Models
         public int QSubcategoryId;
         public List<QuestionModel> Questions;
         public List<int> RemovedAnswersIds;
-
+        public List<int> RemovedQuestionsIds;
     }
 }

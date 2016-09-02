@@ -182,6 +182,11 @@ namespace DAIApplication.ControllersAPI
                 _answerService.RemoveAnswer(answerId);
             }
 
+            foreach (int questionId in test.RemovedQuestionsIds)
+            {
+                _questionService.DeleteQuestion(questionId);
+            }
+
             return new { };
         }
 

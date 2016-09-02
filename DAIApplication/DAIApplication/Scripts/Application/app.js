@@ -34,7 +34,7 @@
                     templateUrl: "Scripts/Application/Admin/Test/Views/test.html",
                     controller: "TestCtrl"
                 }).
-                when("/edit-test/:id", {
+                when("/edit-test/:id/:type?", {
                     templateUrl: "Scripts/Application/Admin/Test/Views/test.html",
                     controller: "TestCtrl"
                 }).

@@ -12,28 +12,37 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Subcategory</th>
-                            <th>Time</th>
-                            <th>Questions No.</th>
-                            <th>Visits</th>
-                            <th>Avg. Score</th>
-                            <th></th>
-                        </tr>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Subcategory</th>
+                                <th>Time</th>
+                                <th>Questions No.</th>
+                                <th>Visits</th>
+                                <th>Avg. Score</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="test in tests">
-                            <td width="30%"><strong><a ng-href="#/edit-test/{{test.Id}}">{{test.Name}}</a></strong></td>
-                            <td>{{test.Category.Name}}</td>
-                            <td>{{test.Subcategory.Name}}</td>
-                            <td>{{test.Time}}</td>
-                            <th>{{test.QuestionsNo}}</th>
-                            <th>{{test.Visits}}</th>
-                            <td>{{test.AvgScore}}</td>
-                            <td><i class="glyphicon glyphicon-trash cursor-pointer" ng-click="removeTest(test)"></i></td>
-                        </tr>
+                            <tr ng-repeat="test in tests">
+                                <td width="30%">
+                                    <strong>
+                                        <span>
+                                            {{test.Name}}
+                                            <a ng-href="#/test-details/{{test.Id}}" title="Test Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                            <a ng-href="#/edit-test/{{test.Id}}" ng-if="test.Visits == 0" title="Edit test"><i class="glyphicon glyphicon-edit"></i></a>
+                                            <a ng-href="#/edit-test/{{test.Id}}/new-with-template" ng-if="test.Visits > 0" title="New test with template"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                                        </span>
+                                    </strong>
+                                </td>
+                                <td>{{test.Category.Name}}</td>
+                                <td>{{test.Subcategory.Name}}</td>
+                                <td>{{test.Time}}</td>
+                                <th>{{test.QuestionsNo}}</th>
+                                <th>{{test.Visits}}</th>
+                                <td>{{test.AvgScore}}</td>
+                                <td><i class="glyphicon glyphicon-trash cursor-pointer" ng-click="removeTest(test)"></i></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -56,10 +65,9 @@
             <div class="widget-data">
                 <div class="widget-int num-count">{{totalVisitorsNo}}</div>
                 <div class="widget-title">Accessed tests</div>
-                <div class="widget-subtitle">Total</div>
             </div>
         </div>
     </div>
 
-    
+
 </div>

@@ -39,3 +39,14 @@
 .font-12 {
     font-size: 12px;
 }
+
+.remove-question {
+    font-size: 18px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.form-panel {
+    padding: 0 !important;
+    border: 10px solid !important;
+}

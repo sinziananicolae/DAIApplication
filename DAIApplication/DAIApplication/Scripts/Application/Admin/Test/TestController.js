@@ -2,11 +2,13 @@
     "use strict";
 
     angular.module("app")
-        .controller("TestCtrl", ["$scope", "toastr", "$routeParams", "QTypesService", "CategoryService", "TestService", testController]);
+        .controller("TestCtrl", ["$scope", "toastr", "$routeParams", "$location", "QTypesService", "CategoryService", "TestService", testController]);
 
-    function testController($scope, toastr, $routeParams, qTypesService, categoryService, testService) {
+    function testController($scope, toastr, $routeParams, $location, qTypesService, categoryService, testService) {
         $scope.answersIndexes = ["a", "b", "c", "d", "e", "f", "g"];
         $scope.singleAnswers = {};
+        $scope.loading = false;
+
         var removedAnswers = [];
         var removedQuestions = [];
 
@@ -31,7 +33,7 @@
                 var test = response.data;
                 $scope.test = {
                     Id: test.Id,
-                    Name: test.Name,
+                    Name: $routeParams.type ? test.Name + "(1)" : test.Name,
                     QCategoryId: test.Category.Id,
                     QSubcategoryId: test.Subcategory.Id,
                     Time: test.Time,
@@ -112,7 +114,21 @@
 
         $scope.removeAnswer = function (question, index) {
             if (question.Answers[index].Id) removedAnswers.push(question.Answers[index].Id);
+            
+            _.find($scope.singleAnswers, function(answer, key) {
+                if (answer === question.Answers[index].Guid) {
+                    delete $scope.singleAnswers[key];
+                    return true;
+                }
+            });
+
             question.Answers.splice(index, 1);
+        }
+
+        $scope.removeQuestion = function (question, index) {
+            if (question.Id) removedQuestions.push(question.Id);
+            $scope.test.Questions.splice(index, 1);
+            delete $scope.singleAnswers[question.Guid];
         }
 
         $scope.saveTest = function () {
@@ -145,30 +161,34 @@
                 return;
             }
 
-            if (objToSave.Id)
+            if (objToSave.Id && !$routeParams.type)
                 editTest(objToSave);
             else
                 saveTest(objToSave);
         }
 
         function saveTest(objToSave) {
+            $scope.loading = true;
             testService.save(objToSave, function (response) {
                 toastr.success("You have successfully added a new test!");
-                $scope.test = {
-                    Questions: []
-                };
-                $scope.singleAnswers = {};
+
+                $location.path("/admin-dashboard");
+
+                $scope.loading = false;
             });
         }
 
         function editTest(objToSave) {
+            $scope.loading = true;
+
             objToSave.RemovedAnswersIds = removedAnswers;
+            objToSave.RemovedQuestionsIds = removedQuestions;
             testService.update(objToSave, function (response) {
-                toastr.success("You have successfully added a new test!");
-                $scope.test = {
-                    Questions: []
-                };
-                $scope.singleAnswers = {};
+                toastr.success("You have successfully edited the selected test!");
+
+                $location.path("/admin-dashboard");
+
+                $scope.loading = false;
             });
         }
 

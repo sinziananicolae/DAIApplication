@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DAIApplication.Data.Database;
 using DAIApplication.Services.Answer;
@@ -81,6 +82,28 @@ namespace DAIApplication.Services.Question
             }
 
             return allQuestionsTypesList;
+        }
+
+        public bool DeleteQuestion(int questionId)
+        {
+            try
+            {
+                QuestionInTest qt = _dbEntities.QuestionInTests.FirstOrDefault(f => f.QuestionId == questionId);
+                _dbEntities.QuestionInTests.Remove(qt);
+                _dbEntities.SaveChanges();
+
+                var questionToDelete = _dbEntities.Questions.Find(questionId);
+                _dbEntities.Questions.Remove(questionToDelete);
+                _dbEntities.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+
+            return true;
         }
     }
 }
