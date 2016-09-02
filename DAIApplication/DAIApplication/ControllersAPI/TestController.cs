@@ -209,8 +209,8 @@ namespace DAIApplication.ControllersAPI
         }
 
         [HttpGet]
-        [Route("api/test-result/{testId}/{resultId}")]
-        public object GetTestResults(int testId, int resultId)
+        [Route("api/test-result/{testId}/{resultId?}")]
+        public object GetTestResults(int testId, int resultId = 0)
         {
             var userId = User.Identity.GetUserId();
             var test = _testService.GetTestSummary(testId, resultId, userId);

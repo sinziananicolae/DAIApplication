@@ -13,7 +13,7 @@
             <a><span class="fa fa-tag"></span> {{test.CategoryName}} </a>
             <a><span class="fa fa-tag"></span> {{test.SubCategoryName}} </a>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-5" ng-if="lastResult">
             <div class="widget widget-default widget-item-icon">
                 <div class="widget-item-left">
                     <span class="fa fa-user"></span>
@@ -22,6 +22,19 @@
                     <div class="widget-int num-count">Score: {{lastResult.Score}}</div>
                     <div class="widget-title">Test Time: {{lastResult.Time | testTime}} </div>
                     <div class="widget-subtitle">Taken at: {{lastResult.Timestamp | showCreatedDate}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5" ng-if="!lastResult">
+            <div class="widget widget-default widget-item-icon">
+                <div class="widget-item-left">
+                    <span class="fa fa-user"></span>
+                </div>
+                <div class="widget-data">
+                    <div class="widget-int num-count">Avg Score: {{allResults | avgScore}}</div>
+                    <div class="widget-title">Avg Test Time: {{allResults | avgTestTime | testTime}} </div>
+                    <div class="widget-subtitle">Taken: {{allResults.length}} times</div>
                 </div>
             </div>
         </div>
@@ -43,7 +56,6 @@
                             <th>Score</th>
                             <th>Time</th>
                             <th>Date</th>
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -57,5 +69,12 @@
                 </div>
             </div>
         </div>
+        <button class="btn btn-success" title="Take test" ng-click="takeTest(test)">
+            <i class="fa fa-play"></i>
+            <span ng-if="!lastResult">Take test</span>
+            <span ng-if="lastResult">Retake test</span>
+        </button>
     </div>
+
+ 
 </div>

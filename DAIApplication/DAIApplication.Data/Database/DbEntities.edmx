@@ -96,7 +96,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QTypeId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="varchar" MaxLength="255" />
-          <Property Name="Text" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Text" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="QuestionInTest">
           <Key>
@@ -622,7 +622,7 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QTypeId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Text" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="QAnswers" Relationship="Model.FK__QAnswer__Questio__5535A963" FromRole="Question" ToRole="QAnswer" />
           <NavigationProperty Name="QType" Relationship="Model.FK__Question__QTypeI__5070F446" FromRole="Question" ToRole="QType" />
           <NavigationProperty Name="UserProfile" Relationship="Model.FK__Question__UserId__6C190EBB" FromRole="Question" ToRole="UserProfile" />

@@ -30,7 +30,7 @@
     <div class="content-frame-body content-frame-body-left">
         <div class="col-md-3 test-list-item" ng-repeat="test in filteredTests">
             <strong class="page-title">
-                <h2 class="font-22"><span class="fa fa-file-text"></span> {{test.Name}}
+                <h2 class="font-22"><span class="fa fa-file-text"></span> <a ng-href="#/test-summary/{{test.Id}}">{{test.Name}}</a>
                 </h2></strong>
             <div>
                 <a><span class="fa fa-tag"></span> {{test.CategoryName}} </a>

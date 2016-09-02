@@ -55,6 +55,36 @@
 
             return "-";
         };
+    })
+
+    .filter('avgScore', function () {
+        return function (input) {
+            if (input !== undefined && input !== null) {
+                var score = 0;
+                _.each(input, function(test) {
+                    score += test.Score;
+                });
+
+                return input.length ? score / input.length : 0;
+            }
+
+            return 0;
+        };
+    })
+
+    .filter('avgTestTime', function () {
+        return function (input) {
+            if (input !== undefined && input !== null) {
+                var time = 0;
+                _.each(input, function(test) {
+                    time += test.Time;
+                });
+
+                return input.length ? time / input.length : 0;
+            }
+
+            return 0;
+        };
     });
 
 }());

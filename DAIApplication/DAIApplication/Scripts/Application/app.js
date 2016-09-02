@@ -42,7 +42,7 @@
                     templateUrl: "Scripts/Application/User/Test/Views/test.html",
                     controller: "TakeTestCtrl"
                 }).
-                when("/test-summary/:testId/:resultId", {
+                when("/test-summary/:testId/:resultId?", {
                     templateUrl: "Scripts/Application/User/Test/Views/testSummary.html",
                     controller: "TestSummaryCtrl"
                 }).
