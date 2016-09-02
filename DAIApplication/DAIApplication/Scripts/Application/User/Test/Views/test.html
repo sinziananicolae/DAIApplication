@@ -1,10 +1,14 @@
 ﻿<div class="row">
-    <div class="col-md-12">
+    <ul class="breadcrumb push-down-0">
+        <li><a href="#/user-dashboard">> Back to dashboard</a></li>
+    </ul>
+    <div class="col-md-12 form-panel">
 
         <form class="form-horizontal" id="testForm" name="testForm">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Test</strong> your knowledge!</h3>
+                    <h3 class="panel-title"><strong>Test</strong> your knowledge!
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <div class="form-group col-md-12">
@@ -26,7 +30,7 @@
                             <label class="col-md-3 col-xs-12 control-label">{{answersIndexes[$index]}}.</label>
                             <div class="col-md-9 col-xs-12" id="answer.Id">
                                 <label class="check" style="display: inline-flex;">
-                                    <input type="radio" class="pick-answer" ng-model="singleAnswers[question.Guid]" name="Correct{{question.Guid}}" value="{{answer.Guid}}" />
+                                    <input type="radio" class="pick-answer" ng-model="singleAnswers[question.Guid]" name="Correct{{question.Guid}}" value="{{answer.Guid}}"/>
                                     <span class="form-control">{{answer.Answer}}</span>
                                 </label>
                             </div>
@@ -35,7 +39,7 @@
                             <label class="col-md-3 col-xs-12 control-label">{{answersIndexes[$index]}}.</label>
                             <div class="col-md-9 col-xs-12">
                                 <label class="check" style="display: inline-flex;">
-                                    <input type="checkbox" class="pick-answer" ng-model="answer.Correct" />
+                                    <input type="checkbox" class="pick-answer" ng-model="answer.Correct"/>
                                     <span class="form-control">{{answer.Answer}}</span>
                                 </label>
                             </div>

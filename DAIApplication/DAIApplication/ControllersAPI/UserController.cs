@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using DAIApplication.Data.Database;
 using DAIApplication.Models;
 using DAIApplication.Services.UserService;
 using Microsoft.AspNet.Identity;
@@ -50,6 +51,36 @@ namespace DAIApplication.ControllersAPI
                     user.Email,
                     UserRole = userRole
                 }
+            };
+        }
+
+        [HttpGet]
+        [Route("api/userprofile")]
+        public object GetUserProfile()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var userProfile = _UserService.GetUserProfile(userId);
+
+
+            return new
+            {
+                success = true,
+                data = userProfile
+            };
+        }
+
+        [HttpPut]
+        [Route("api/userprofile")]
+        public object UpdateUserProfile([FromBody] UserProfile userProfile)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var result = _UserService.UpdateUserProfile(userId, userProfile);
+            
+            return new
+            {
+                success = result
             };
         }
 

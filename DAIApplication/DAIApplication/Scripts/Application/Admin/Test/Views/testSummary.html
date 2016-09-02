@@ -1,0 +1,85 @@
+﻿<div class="row">
+    <ul class="breadcrumb push-down-0">
+        <li><a href="#/admin-dashboard">> Back to dashboard</a></li>
+    </ul>
+    <div class="col-md-12 form-panel">
+
+        <form class="form-horizontal" id="testForm" name="testForm">
+            <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><strong>Test</strong> Details
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <strong class="page-title">
+                        <h2 class="font-22">
+                            <span class="fa fa-file-text"></span> {{test.Name}}
+                            <a ng-href="#/edit-test/{{test.Id}}" ng-if="testInfo.length == 0" title="Edit test"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a ng-href="#/edit-test/{{test.Id}}/new-with-template" ng-if="testInfo.length > 0" title="New test with template"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                        </h2>
+                    </strong>
+                    <div style="padding: 20px;">
+                        <a><span class="fa fa-tag"></span> {{test.Category.Name}} </a>
+                        <a><span class="fa fa-tag"></span> {{test.Subcategory.Name}} </a>
+                        <div>Time: {{test.Time}} minute(s)</div>
+                        <div>Created at: {{test.Timestamp | showCreatedDate}}</div>
+                    </div>
+                </div>
+
+                <hr/>
+                <strong class="page-title">
+                    <h3>
+                        <span class="fa fa-pie-chart"></span> Test statistics
+                    </h3>
+                </strong>
+
+                <div class="panel-body panel-body-table">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Score</th>
+                                <th>Time</th>
+                                <th>Email</th>
+                                <th>Timestamp</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-if="testInfo.length === 0"> <td colspan="5">No users have taken your test!</td></tr>
+                            <tr ng-repeat="test in testInfo">
+                                <td>{{test.FirstName}} {{test.LastName}}</td>
+                                <td>{{test.Score}}</td>
+                                <td>{{test.Time | testTime}}</td>
+                                <td>{{test.Email}}</td>
+                                <td>{{test.Timestamp | showCreatedDate}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <hr/>
+                    <strong class="page-title">
+                        <h3>
+                            <span class="fa fa-eye"></span> Test preview
+                        </h3>
+                    </strong>
+                    <div class="form-group" ng-repeat="question in test.Questions">
+                        <label class="col-md-3 col-xs-12 control-label">Question {{$index + 1}}: {{question.Text}}</label>
+                        <div class="col-md-12 col-xs-12" ng-repeat="answer in question.Answers">
+                            <label class="col-md-3 col-xs-12 control-label"><i ng-if="answer.Correct" class="glyphicon glyphicon-check" style="color: green"></i> {{answersIndexes[$index]}}. </label>
+                            <div class="col-md-9 col-xs-12" id="answer.Id">
+                                <label class="check" style="display: inline-flex;">
+                                    <span class="form-control">{{answer.Answer}}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>                   

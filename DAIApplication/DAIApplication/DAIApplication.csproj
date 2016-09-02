@@ -371,10 +371,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\Application\Admin\Test\TestController.js" />
+    <Content Include="Scripts\Application\Admin\Test\TestSummaryController.js" />
     <Content Include="Scripts\Application\Admin\Test\Views\test.html" />
+    <Content Include="Scripts\Application\Admin\Test\Views\testSummary.html" />
     <Content Include="Scripts\Application\app.js" />
     <Content Include="Scripts\Application\Admin\Dashboard\DashboardController.js" />
     <Content Include="Scripts\Application\Admin\Dashboard\Views\dashboard.html" />
+    <Content Include="Scripts\Application\Common\UserProfile\UserProfileController.js" />
+    <Content Include="Scripts\Application\Common\UserProfile\Views\userProfile.html" />
     <Content Include="Scripts\Application\services.js" />
     <Content Include="Scripts\Application\Common\Directives\directives.js" />
     <Content Include="Scripts\Application\Common\Filters\filters.js" />

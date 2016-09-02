@@ -33,11 +33,13 @@
                     <li class="active">
                         <a href="#/dashboard"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
                     </li>
-                    <li class="xn-openable" ng-if="user.UserRole == 1">
-                        <a href="#/profile"><span class="fa fa-files-o"></span> <span class="xn-text">Profile</span></a>
-                    </li>
+
                     <li class="xn-openable" ng-if="user.UserRole == 1">
                         <a href="#/createTest"><span class="fa fa-files-o"></span> <span class="xn-text">Create Test</span></a>
+                    </li>
+
+                    <li>
+                        <a href="#/userprofile"><span class="fa fa-user"></span> <span class="xn-text">User Profile</span></a>
                     </li>
                 </ul>
                 <!-- END X-NAVIGATION -->

@@ -222,5 +222,26 @@ namespace DAIApplication.ControllersAPI
 
             return test;
         }
+
+        [HttpGet]
+        [Route("api/admin-test/{testId}")]
+        public object GetAdminTestInfo(int testId)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var userRole = _userService.GetUserRole(user.Email);
+
+            var test = _testService.GetTestById(testId, userRole);
+            var testInfo = _testService.GetAdminTestInfo(testId);
+
+            return new
+            {
+                success = true,
+                data = new
+                {
+                  Test = test,
+                  TestInfo = testInfo  
+                }
+            };
+        }
     }
 }

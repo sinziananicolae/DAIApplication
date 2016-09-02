@@ -29,7 +29,7 @@
                                     <strong>
                                         <span>
                                             {{test.Name}}
-                                            <a ng-href="#/test-details/{{test.Id}}" title="Test Details"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                            <a ng-href="#/admin-test-summary/{{test.Id}}" title="Test Details"><i class="glyphicon glyphicon-eye-open"></i></a>
                                             <a ng-href="#/edit-test/{{test.Id}}" ng-if="test.Visits == 0" title="Edit test"><i class="glyphicon glyphicon-edit"></i></a>
                                             <a ng-href="#/edit-test/{{test.Id}}/new-with-template" ng-if="test.Visits > 0" title="New test with template"><i class="glyphicon glyphicon-plus-sign"></i></a>
                                         </span>

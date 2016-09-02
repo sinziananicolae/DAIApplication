@@ -32,32 +32,85 @@
                 }).
                 when("/createTest", {
                     templateUrl: "Scripts/Application/Admin/Test/Views/test.html",
-                    controller: "TestCtrl"
+                    controller: "TestCtrl",
+                    resolve: {
+                        "check": function ($location, UserService) {
+                            UserService.get(function (response) {
+                                if (response.data.UserRole == 2) {
+                                    $location.path("/user-dashboard");
+                                }
+                            });
+                        }
+                    }
                 }).
                 when("/edit-test/:id/:type?", {
                     templateUrl: "Scripts/Application/Admin/Test/Views/test.html",
-                    controller: "TestCtrl"
+                    controller: "TestCtrl",
+                    resolve: {
+                        "check": function ($location, UserService) {
+                            UserService.get(function (response) {
+                                if (response.data.UserRole == 2) {
+                                    $location.path("/user-dashboard");
+                                }
+                            });
+                        }
+                    }
                 }).
                 when("/take-test/:id", {
                     templateUrl: "Scripts/Application/User/Test/Views/test.html",
-                    controller: "TakeTestCtrl"
-                }).
-                when("/test-summary/:testId/:resultId?", {
-                    templateUrl: "Scripts/Application/User/Test/Views/testSummary.html",
-                    controller: "TestSummaryCtrl"
-                }).
-                when("/user-dashboard", {
-                    templateUrl: "Scripts/Application/User/Dashboard/Views/dashboard.html",
-                    controller: "UserDashboardCtrl",
+                    controller: "TakeTestCtrl",
                     resolve: {
                         "check": function ($location, UserService) {
-                            UserService.get(function(response) {
+                            UserService.get(function (response) {
                                 if (response.data.UserRole == 1) {
                                     $location.path("/admin-dashboard");
                                 }
                             });
                         }
                     }
+                }).
+                when("/test-summary/:testId/:resultId?", {
+                    templateUrl: "Scripts/Application/User/Test/Views/testSummary.html",
+                    controller: "TestSummaryCtrl",
+                    resolve: {
+                        "check": function ($location, UserService) {
+                            UserService.get(function (response) {
+                                if (response.data.UserRole == 1) {
+                                    $location.path("/admin-dashboard");
+                                }
+                            });
+                        }
+                    }
+                }).
+                when("/admin-test-summary/:testId", {
+                    templateUrl: "Scripts/Application/Admin/Test/Views/testSummary.html",
+                    controller: "AdminTestSummaryCtrl",
+                    resolve: {
+                        "check": function ($location, UserService) {
+                            UserService.get(function (response) {
+                                if (response.data.UserRole == 2) {
+                                    $location.path("/user-dashboard");
+                                }
+                            });
+                        }
+                    }
+                }).
+                when("/user-dashboard", {
+                    templateUrl: "Scripts/Application/User/Dashboard/Views/dashboard.html",
+                    controller: "UserDashboardCtrl",
+                    resolve: {
+                        "check": function ($location, UserService) {
+                            UserService.get(function (response) {
+                                if (response.data.UserRole == 1) {
+                                    $location.path("/admin-dashboard");
+                                }
+                            });
+                        }
+                    }
+                }).
+                when("/userprofile", {
+                    templateUrl: "Scripts/Application/Common/UserProfile/Views/userProfile.html",
+                    controller: "UserProfileCtrl"
                 }).
             otherwise({
                 redirectTo: "/user-dashboard"

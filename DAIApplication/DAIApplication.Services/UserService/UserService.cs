@@ -51,5 +51,35 @@ namespace DAIApplication.Services.UserService
             var username = user.Username;
             return username;
         }
+
+        public object GetUserProfile(string userId)
+        {
+            UserProfile userProfile = _dbEntities.UserProfiles.FirstOrDefault(f => f.UserId == userId);
+
+            return new
+            {
+                userProfile.FirstName,
+                userProfile.LastName,
+                userProfile.Email,
+                userProfile.PhoneNo,
+                userProfile.Country,
+                userProfile.Sex,
+                userProfile.Username
+            };
+        }
+
+        public bool UpdateUserProfile(string userId, UserProfile userProfile)
+        {
+            UserProfile originalUserProfile = _dbEntities.UserProfiles.FirstOrDefault(f => f.UserId == userId);
+
+            originalUserProfile.FirstName = userProfile.FirstName;
+            originalUserProfile.LastName = userProfile.LastName;
+            originalUserProfile.Country = userProfile.Country;
+            originalUserProfile.PhoneNo = userProfile.PhoneNo;
+            originalUserProfile.Sex = userProfile.Sex;
+            _dbEntities.SaveChanges();
+
+            return true;
+        }
     }
 }

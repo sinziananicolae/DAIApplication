@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using DAIApplication.Data.Database;
@@ -295,6 +296,15 @@ namespace DAIApplication.Services.Test
                     Test = test
                 }
             };
+        }
+
+        public object GetAdminTestInfo(int testId)
+        {
+            var userTestInfo = _dbEntities.UserTests.Where(f => f.TestId == testId)
+                .Select(f => new { f.Score, f.UserProfile.Email, f.UserProfile.FirstName, f.UserProfile.LastName, f.UserProfile.PhoneNo, f.Time, f.Timestamp })
+                .ToList().OrderByDescending(f => f.Score);
+
+            return userTestInfo;
         }
 
     }
