@@ -382,7 +382,9 @@
     <Content Include="Scripts\Application\User\Dashboard\Views\dashboard.html" />
     <Content Include="Scripts\Application\config.js" />
     <Content Include="Scripts\Application\User\Test\TestController.js" />
+    <Content Include="Scripts\Application\User\Test\TestSummaryController.js" />
     <Content Include="Scripts\Application\User\Test\Views\test.html" />
+    <Content Include="Scripts\Application\User\Test\Views\testSummary.html" />
     <Content Include="Scripts\Core\AngularJS\angular-animate.min.js" />
     <Content Include="Scripts\Core\AngularJS\angular-cookies.min.js" />
     <Content Include="Scripts\Core\AngularJS\angular-loader.min.js" />

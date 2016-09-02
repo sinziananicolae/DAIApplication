@@ -42,6 +42,10 @@
                     templateUrl: "Scripts/Application/User/Test/Views/test.html",
                     controller: "TakeTestCtrl"
                 }).
+                when("/test-summary/:testId/:resultId", {
+                    templateUrl: "Scripts/Application/User/Test/Views/testSummary.html",
+                    controller: "TestSummaryCtrl"
+                }).
                 when("/user-dashboard", {
                     templateUrl: "Scripts/Application/User/Dashboard/Views/dashboard.html",
                     controller: "UserDashboardCtrl",

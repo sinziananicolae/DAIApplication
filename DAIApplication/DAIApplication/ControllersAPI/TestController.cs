@@ -205,10 +205,20 @@ namespace DAIApplication.ControllersAPI
             var userId = User.Identity.GetUserId();
             var tests = _testService.AssessTest(id, test.Answers, test.Time, userId);
 
+            return tests;
+        }
+
+        [HttpGet]
+        [Route("api/test-result/{testId}/{resultId}")]
+        public object GetTestResults(int testId, int resultId)
+        {
+            var userId = User.Identity.GetUserId();
+            var test = _testService.GetTestSummary(testId, resultId, userId);
+
             return new
             {
                 success = true,
-                data = tests
+                data = test
             };
         }
     }

@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module("app")
-        .controller("TakeTestCtrl", ["$scope", "toastr", "$routeParams", "QTypesService", "CategoryService", "TestService", testController]);
+        .controller("TakeTestCtrl", ["$scope", "toastr", "$routeParams", "$location", "QTypesService", "CategoryService", "TestService", testController]);
 
-    function testController($scope, toastr, $routeParams, qTypesService, categoryService, testService) {
+    function testController($scope, toastr, $routeParams, $location, qTypesService, categoryService, testService) {
         var interval;
 
         $scope.answersIndexes = ["a", "b", "c", "d", "e", "f", "g"];
@@ -15,17 +15,22 @@
         };
 
         var startCountDown = function () {
-            $scope.remainingMinutes = $scope.test.Time - 1;
-            $scope.remainingSeconds = 60;
+            $scope.remainingMinutes = $scope.test.Time;
+            $scope.remainingSeconds = 0;
 
             interval = setInterval(function () {
                 if ($scope.remainingSeconds === 0) {
 
                     if ($scope.remainingMinutes === 0) {
                         $scope.testIsOver = true;
-                        $scope.submitTest();
                         clearInterval(interval);
                         $scope.$apply();
+
+                        if (confirm("Time is up! Do you want to submit the test?")) {
+                            $scope.submitTest();
+                        } else {
+                            $location.path("/user-dashboard");
+                        }
                         return;
                     }
 
@@ -119,7 +124,9 @@
                 });
 
             testService.save({ id: $routeParams.id }, objToSend, function (response) {
-                
+                if (response.success) {
+                    $location.path("/test-summary/" + $scope.test.Id + "/" + response.data.Id);
+                }
             });
     };
 

@@ -21,6 +21,9 @@
         }])
         .factory("TestService", ["$resource", function ($resource) {
             return $resource("/api/test/:id", { id: "@id" }, serviceMetods);
+        }])
+        .factory("TestResultService", ["$resource", function ($resource) {
+            return $resource("/api/test-result/:testId/:resultId", { testId: "@testId", resultId: "@resultId" }, serviceMetods);
         }]);
 
 }());

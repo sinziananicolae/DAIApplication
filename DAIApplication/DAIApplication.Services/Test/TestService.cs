@@ -174,28 +174,16 @@ namespace DAIApplication.Services.Test
             };
         }
 
-        public object AddUserTest(UserTest userTest)
+        public int AddUserTest(UserTest userTest)
         {
             if (userTest.TestId == 0 || userTest.UserId == null)
-                return new
-                {
-                    success = false,
-                    message = "Field missing"
-                };
+                return 0;
 
             userTest.Timestamp = DateTime.Now;
             _dbEntities.UserTests.Add(userTest);
             _dbEntities.SaveChanges();
 
-            return new
-            {
-                success = true,
-                message = "Success",
-                data = new
-                {
-                    userTest.Id
-                }
-            };
+            return userTest.Id;
         }
 
         public object AssessTest(int testId, Dictionary<int, List<int>> answers, int time, string userId)
@@ -217,11 +205,12 @@ namespace DAIApplication.Services.Test
                     {
                         currentScore += 1;
                     }
-                } else if (chosenAnswers.Count > 0)
+                }
+                else if (chosenAnswers.Count > 0)
                 {
                     var correctAnswers = _dbEntities.QAnswers.Where(f => f.QuestionId == question.Id && f.Correct).Select(item => item.Id).ToList();
                     var isEqual = new HashSet<int>(chosenAnswers).SetEquals(correctAnswers);
-                    if(isEqual)
+                    if (isEqual)
                         currentScore += 1;
                 }
             }
@@ -235,13 +224,13 @@ namespace DAIApplication.Services.Test
                 Time = time
             };
 
-            AddUserTest(ut);
+            var id = AddUserTest(ut);
 
             return new
             {
                 success = true,
                 message = "Success",
-                data = new { }
+                data = new { Id = id }
             };
         }
 
@@ -265,13 +254,6 @@ namespace DAIApplication.Services.Test
                     _dbEntities.Questions.Remove(questionToDelete);
                     _dbEntities.SaveChanges();
                 }
-
-                //foreach (UserTest userTest in testToDelete.UserTests)
-                //{
-                //    var userTestToDelete = _dbEntities.UserTests.Find(userTest.Id);
-                //    _dbEntities.UserTests.Remove(userTestToDelete);
-                //    _dbEntities.SaveChanges();
-                //}
             }
             catch (Exception e)
             {
@@ -288,6 +270,22 @@ namespace DAIApplication.Services.Test
                 success = true,
                 message = "Success",
                 data = new { }
+            };
+        }
+
+        public object GetTestSummary(int testId, int resultId, string userId)
+        {
+            var uts = _dbEntities.UserTests.Where(f => f.UserId == userId && f.TestId == testId).Select(g => new { g.Score, g.Time, g.Timestamp, g.Id }).ToList();
+            var ut = _dbEntities.UserTests.Where(f => f.TestId == testId && f.UserId == userId && f.Id == resultId).Select(g => new { g.Score, g.Time, g.Timestamp.Value, g.Id }).ToList();
+
+            return new
+            {
+                success = true,
+                data = new
+                {
+                    AllResults = uts,
+                    LastResult = ut
+                }
             };
         }
 
