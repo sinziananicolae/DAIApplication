@@ -1,10 +1,61 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-	<meta charset="utf-8" />
-</head>
-<body>
+﻿<div class="content-frame">
+    <ul class="breadcrumb push-down-0">
+        <li><a href="#/user-dashboard">Back to dashboard</a></li>
+    </ul>
 
-</body>
-</html>
+    <div class="row" style="margin-top: 30px; padding-left: 20px;">
+        <strong class="page-title">
+            <h2 class="font-22">
+                <span class="fa fa-file-text"></span> {{test.Name}}
+            </h2>
+        </strong>
+        <div style="padding: 20px;">
+            <a><span class="fa fa-tag"></span> {{test.CategoryName}} </a>
+            <a><span class="fa fa-tag"></span> {{test.SubCategoryName}} </a>
+        </div>
+        <div class="col-md-3">
+            <div class="widget widget-default widget-item-icon">
+                <div class="widget-item-left">
+                    <span class="fa fa-user"></span>
+                </div>
+                <div class="widget-data">
+                    <div class="widget-int num-count">Score: {{lastResult.Score}}</div>
+                    <div class="widget-title">Test Time: {{lastResult.Time | testTime}} </div>
+                    <div class="widget-subtitle">Taken at: {{lastResult.Timestamp | showCreatedDate}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title-box">
+                    <span>Test activity</span>
+                </div>
+            </div>
+            <div class="panel-body panel-body-table">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Score</th>
+                            <th>Time</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="test in allResults">
+                            <td>{{test.Score}}</td>
+                            <th>{{test.Time | testTime}}</th>
+                            <th>{{test.Timestamp | showCreatedDate}}</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

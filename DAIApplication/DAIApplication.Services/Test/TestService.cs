@@ -38,7 +38,7 @@ namespace DAIApplication.Services.Test
                     test.Time,
                     test.Timestamp,
                     QuestionsNo = test.QuestionInTests.Count,
-                    TestResults = test.UserTests.Select(f => new { f.Time, f.Score }).ToList()
+                    TestResults = test.UserTests.Select(f => new { f.Time, f.Score, f.Timestamp, f.UserId }).ToList()
                 });
             }
 
@@ -276,7 +276,14 @@ namespace DAIApplication.Services.Test
         public object GetTestSummary(int testId, int resultId, string userId)
         {
             var uts = _dbEntities.UserTests.Where(f => f.UserId == userId && f.TestId == testId).Select(g => new { g.Score, g.Time, g.Timestamp, g.Id }).ToList();
-            var ut = _dbEntities.UserTests.Where(f => f.TestId == testId && f.UserId == userId && f.Id == resultId).Select(g => new { g.Score, g.Time, g.Timestamp.Value, g.Id }).ToList();
+            var ut = _dbEntities.UserTests.Where(f => f.TestId == testId && f.UserId == userId && f.Id == resultId).Select(g => new { g.Score, g.Time, g.Timestamp, g.Id }).ToList();
+            var test = _dbEntities.Tests.Select(f => new
+            {
+                f.Id,
+                f.Name,
+                CategoryName = f.Category.Name,
+                SubCategoryName = f.Subcategory.Name
+            }).FirstOrDefault(f => f.Id == testId);
 
             return new
             {
@@ -284,7 +291,8 @@ namespace DAIApplication.Services.Test
                 data = new
                 {
                     AllResults = uts,
-                    LastResult = ut
+                    LastResult = ut,
+                    Test = test
                 }
             };
         }

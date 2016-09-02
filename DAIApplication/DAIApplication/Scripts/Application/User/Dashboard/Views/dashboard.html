@@ -42,7 +42,7 @@
             <div>{{test.Time}} minute(s)</div>
             <div>{{test.QuestionsNo}} questions</div>
             <div class="font-12">Taken: {{test.TestResults.length}} times</div>
-            <div class="font-12">Avg: {{calculateAvgScore(test)}}</div>
+            <div class="font-12">Avg: {{calculateAvgScore(test) | number : 2}}</div>
             <button class="btn btn-success pull-right" title="Take test" ng-click="takeTest(test)"><i class="fa fa-play"></i></button>
         </div>
     </div>

@@ -215,11 +215,7 @@ namespace DAIApplication.ControllersAPI
             var userId = User.Identity.GetUserId();
             var test = _testService.GetTestSummary(testId, resultId, userId);
 
-            return new
-            {
-                success = true,
-                data = test
-            };
+            return test;
         }
     }
 }
