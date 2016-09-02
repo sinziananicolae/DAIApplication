@@ -40,7 +40,7 @@ namespace DAIApplication.Services.Question
 
         public int AddQuestion(Data.Database.Question question, List<QAnswer> answers)
         {
-            if (question.QTypeId == 0 || question.Text == null || question.UserId == null)
+            if (question.QTypeId == 0 || question.Text == null)
                 return -1;
 
             _dbEntities.Questions.Add(question);

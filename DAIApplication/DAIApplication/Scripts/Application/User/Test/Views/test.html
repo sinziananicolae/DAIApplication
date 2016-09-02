@@ -25,7 +25,7 @@
 
 
                     <div class="form-group" ng-repeat="question in test.Questions">
-                        <label class="col-md-3 col-xs-12 control-label">Question {{$index + 1}}: {{question.Text}}</label>
+                        <label class="col-md-9 col-xs-12 control-label" style="text-align: left; padding-left: 200px;">Question {{$index + 1}}: {{question.Text}}</label>
                         <div class="col-md-12 col-xs-12" ng-repeat="answer in question.Answers" ng-if="question.QTypeId === 1">
                             <label class="col-md-3 col-xs-12 control-label">{{answersIndexes[$index]}}.</label>
                             <div class="col-md-9 col-xs-12" id="answer.Id">

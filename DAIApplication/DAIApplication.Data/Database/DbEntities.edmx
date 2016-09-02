@@ -95,7 +95,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QTypeId" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="varchar" MaxLength="255" />
           <Property Name="Text" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="QuestionInTest">
@@ -192,18 +191,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Principal>
             <Dependent Role="Question">
               <PropertyRef Name="QTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Question__UserId__6C190EBB">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
-          <End Role="Question" Type="Self.Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Question">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -399,10 +386,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <End Role="QType" EntitySet="QType" />
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
-          <AssociationSet Name="FK__Question__UserId__6C190EBB" Association="Self.FK__Question__UserId__6C190EBB">
-            <End Role="UserProfile" EntitySet="UserProfile" />
-            <End Role="Question" EntitySet="Question" />
-          </AssociationSet>
           <AssociationSet Name="FK__QuestionI__Quest__5EBF139D" Association="Self.FK__QuestionI__Quest__5EBF139D">
             <End Role="Question" EntitySet="Question" />
             <End Role="QuestionInTest" EntitySet="QuestionInTest" />
@@ -494,10 +477,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </AssociationSet>
           <AssociationSet Name="FK__Question__QTypeI__5070F446" Association="Model.FK__Question__QTypeI__5070F446">
             <End Role="QType" EntitySet="QTypes" />
-            <End Role="Question" EntitySet="Questions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Question__UserId__6C190EBB" Association="Model.FK__Question__UserId__6C190EBB">
-            <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="Question" EntitySet="Questions" />
           </AssociationSet>
           <AssociationSet Name="FK__QuestionI__Quest__5EBF139D" Association="Model.FK__QuestionI__Quest__5EBF139D">
@@ -621,11 +600,9 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QTypeId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="QAnswers" Relationship="Model.FK__QAnswer__Questio__5535A963" FromRole="Question" ToRole="QAnswer" />
           <NavigationProperty Name="QType" Relationship="Model.FK__Question__QTypeI__5070F446" FromRole="Question" ToRole="QType" />
-          <NavigationProperty Name="UserProfile" Relationship="Model.FK__Question__UserId__6C190EBB" FromRole="Question" ToRole="UserProfile" />
           <NavigationProperty Name="QuestionInTests" Relationship="Model.FK__QuestionI__Quest__5EBF139D" FromRole="Question" ToRole="QuestionInTest" />
         </EntityType>
         <EntityType Name="QuestionInTest">
@@ -677,7 +654,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
           <Property Name="PhoneNo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Sex" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Questions" Relationship="Model.FK__Question__UserId__6C190EBB" FromRole="UserProfile" ToRole="Question" />
           <NavigationProperty Name="Tests" Relationship="Model.FK__Test__UserId__6D0D32F4" FromRole="UserProfile" ToRole="Test" />
           <NavigationProperty Name="UserTests" Relationship="Model.FK__UserTest__UserId__6B24EA82" FromRole="UserProfile" ToRole="UserTest" />
         </EntityType>
@@ -786,18 +762,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             </Principal>
             <Dependent Role="Question">
               <PropertyRef Name="QTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Question__UserId__6C190EBB">
-          <End Type="Model.UserProfile" Role="UserProfile" Multiplicity="0..1" />
-          <End Type="Model.Question" Role="Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Question">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -974,7 +938,6 @@ warning 6002: The table/view 'DAI-application.sys.database_firewall_rules' does 
             <EntityTypeMapping TypeName="Model.Question">
               <MappingFragment StoreEntitySet="Question">
                 <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="QTypeId" ColumnName="QTypeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

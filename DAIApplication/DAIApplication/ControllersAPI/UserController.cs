@@ -14,14 +14,14 @@ namespace DAIApplication.ControllersAPI
 {
     public class UserController : ApiController
     {
-        private UserService _UserService;
+        private UserService _userService;
         protected ApplicationDbContext ApplicationDbContext { get; set; }
         
         protected UserManager<ApplicationUser> UserManager { get; set; }
 
         public UserController()
         {
-            _UserService = new UserService();
+            _userService = new UserService();
             ApplicationDbContext = new ApplicationDbContext();
             UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(this.ApplicationDbContext));
         }
@@ -40,8 +40,8 @@ namespace DAIApplication.ControllersAPI
                 };
             }
 
-            var userRole = _UserService.GetUserRole(user.Email);
-            var userName = _UserService.GetUsername(user.Email);
+            var userRole = _userService.GetUserRole(user.Email);
+            var userName = _userService.GetUsername(user.Email);
             return new
             {
                 success = true,
@@ -60,7 +60,7 @@ namespace DAIApplication.ControllersAPI
         {
             var userId = User.Identity.GetUserId();
 
-            var userProfile = _UserService.GetUserProfile(userId);
+            var userProfile = _userService.GetUserProfile(userId);
 
 
             return new
@@ -76,11 +76,26 @@ namespace DAIApplication.ControllersAPI
         {
             var userId = User.Identity.GetUserId();
 
-            var result = _UserService.UpdateUserProfile(userId, userProfile);
+            var result = _userService.UpdateUserProfile(userId, userProfile);
             
             return new
             {
                 success = result
+            };
+        }
+
+        [HttpGet]
+        [Route("api/user-history")]
+        public object GetAdminTestInfo()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var userHistory = _userService.GetUserHistory(userId);
+
+            return new
+            {
+                success = true,
+                data = userHistory
             };
         }
 

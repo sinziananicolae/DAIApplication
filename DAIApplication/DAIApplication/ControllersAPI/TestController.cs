@@ -89,8 +89,7 @@ namespace DAIApplication.ControllersAPI
                 Question currentQuestion = new Question
                 {
                     QTypeId = question.QTypeId,
-                    Text = question.Text,
-                    UserId = userId
+                    Text = question.Text
                 };
 
                 List<QAnswer> answersList = new List<QAnswer>();
@@ -134,7 +133,6 @@ namespace DAIApplication.ControllersAPI
                 {
                     QTypeId = question.QTypeId,
                     Text = question.Text,
-                    UserId = userId,
                     Id = question.Id
                 };
 

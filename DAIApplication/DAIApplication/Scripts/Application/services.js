@@ -30,6 +30,9 @@
         }])
         .factory("UserProfileService", ["$resource", function ($resource) {
             return $resource("/api/userprofile", {}, serviceMetods);
+        }])
+        .factory("UserHistoryService", ["$resource", function ($resource) {
+            return $resource("/api/user-history", {}, serviceMetods);
         }]);
 
 }());

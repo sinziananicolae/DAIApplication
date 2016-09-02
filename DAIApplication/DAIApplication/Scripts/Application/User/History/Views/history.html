@@ -1,0 +1,61 @@
+﻿<div class="content-frame">
+
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-book"></span> User Tests History</h2>
+        </div>
+    </div>
+    <!-- START CONTENT FRAME BODY -->
+    <div class="row" ng-repeat="(testId, history) in userHistory">
+        <div class="col-md-4">
+            <div class="content-frame-body content-frame-body-left" style="margin: 0; padding-top: 20px">
+                <div class="test-list-item">
+                    <strong class="page-title">
+                        <h2 class="font-22">
+                            <span class="fa fa-file-text"></span> {{history.TestName}}
+                        </h2>
+                    </strong>
+                    <div>
+                        <a><span class="fa fa-tag"></span> {{history.TestCategoryName}} </a>
+                        <a><span class="fa fa-tag"></span> {{history.TestSubCategoryName}} </a>
+                    </div>
+
+                    <span class="font-12">Created at: {{history.Timestamp | showCreatedDate }}</span>
+
+                    <div>{{history.Time}} minute(s)</div>
+                    <div>{{history.MaxScore}} questions</div>
+                    <button class="btn btn-success" title="Take test" ng-click="takeTest(history)"><i class="fa fa-play"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="content-frame-body content-frame-body-left" style="margin: 0; padding-top: 20px">
+                <div class="panel-body panel-body-table" style="padding: 10px">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Score</th>
+                                <th>Time</th>
+                                <th>Timestamp</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-if="history.Tests === 0"> <td colspan="5">You have not taken this test yet!</td></tr>
+                            <tr ng-repeat="test in history.Tests">
+                                <td>{{test.Score}}</td>
+                                <td>{{test.Time | testTime}}</td>
+                                <td>{{test.Timestamp | showCreatedDate}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12"><hr style="border-top: 1px solid gainsboro;" /></div>
+        <!-- END CONTENT FRAME BODY -->
+    </div>
+</div>

@@ -108,6 +108,19 @@
                         }
                     }
                 }).
+                when("/user-history", {
+                    templateUrl: "Scripts/Application/User/History/Views/history.html",
+                    controller: "UserHistoryCtrl",
+                    resolve: {
+                        "check": function ($location, UserService) {
+                            UserService.get(function (response) {
+                                if (response.data.UserRole == 1) {
+                                    $location.path("/admin-dashboard");
+                                }
+                            });
+                        }
+                    }
+                }).
                 when("/userprofile", {
                     templateUrl: "Scripts/Application/Common/UserProfile/Views/userProfile.html",
                     controller: "UserProfileCtrl"

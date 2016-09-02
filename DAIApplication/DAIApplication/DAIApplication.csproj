@@ -385,6 +385,8 @@
     <Content Include="Scripts\Application\User\Dashboard\DashboardController.js" />
     <Content Include="Scripts\Application\User\Dashboard\Views\dashboard.html" />
     <Content Include="Scripts\Application\config.js" />
+    <Content Include="Scripts\Application\User\History\HistoryController.js" />
+    <Content Include="Scripts\Application\User\History\Views\history.html" />
     <Content Include="Scripts\Application\User\Test\TestController.js" />
     <Content Include="Scripts\Application\User\Test\TestSummaryController.js" />
     <Content Include="Scripts\Application\User\Test\Views\test.html" />

@@ -23,13 +23,11 @@ namespace DAIApplication.Data.Database
     
         public int Id { get; set; }
         public int QTypeId { get; set; }
-        public string UserId { get; set; }
         public string Text { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QAnswer> QAnswers { get; set; }
         public virtual QType QType { get; set; }
-        public virtual UserProfile UserProfile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QuestionInTest> QuestionInTests { get; set; }
     }

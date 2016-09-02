@@ -81,5 +81,29 @@ namespace DAIApplication.Services.UserService
 
             return true;
         }
+
+        public object GetUserHistory(string userId)
+        {
+            IEnumerable<UserTest> userTests = _dbEntities.UserTests.Where(f => f.UserId == userId);
+            List<object> userHistory = new List<object>();
+            foreach (UserTest userTest in userTests)
+            {
+                userHistory.Add(new
+                {
+                    userTest.Score,
+                    userTest.MaxScore,
+                    userTest.Time,
+                    userTest.Timestamp,
+                    TestId = userTest.Test.Id,
+                    TestName = userTest.Test.Name,
+                    TestCategoryName = userTest.Test.Category.Name,
+                    TestSubCategoryName = userTest.Test.Subcategory.Name,
+                    TestTime = userTest.Test.Time,
+                    TestTimestamp = userTest.Test.Timestamp
+                });
+            }
+
+            return userHistory;
+        }
     }
 }

@@ -67,7 +67,7 @@
                         </h3>
                     </strong>
                     <div class="form-group" ng-repeat="question in test.Questions">
-                        <label class="col-md-3 col-xs-12 control-label">Question {{$index + 1}}: {{question.Text}}</label>
+                        <label class="col-md-9 col-xs-12 control-label" style="text-align: left; padding-left: 200px;">Question {{$index + 1}}: {{question.Text}}</label>
                         <div class="col-md-12 col-xs-12" ng-repeat="answer in question.Answers">
                             <label class="col-md-3 col-xs-12 control-label"><i ng-if="answer.Correct" class="glyphicon glyphicon-check" style="color: green"></i> {{answersIndexes[$index]}}. </label>
                             <div class="col-md-9 col-xs-12" id="answer.Id">
